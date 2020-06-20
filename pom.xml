@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>dv.fulcro-template</groupId>
+  <artifactId>clj-template</artifactId>
+  <version>2020-06-09-3</version>
+  <name>fulcro-template</name>
+  <description>clj-new template for Fulcro applications</description>
+  <url>https://github.com/dvingo/dv.fulcro-template</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Daniel Vingo</name>
+    </developer>
+  </developers>
+  <scm>
+    <url>https://github.com/dvingo/dv.fulcro-template</url>
+    <connection>scm:git:git://github.com/dvingo/dv.fulcro-template</connection>
+    <developerConnection>scm:git:ssh://git@github.com/dvingo/dv.fulcro-template.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.10.1</version>
+    </dependency>
+    <dependency>
+      <groupId>seancorfield</groupId>
+      <artifactId>clj-new</artifactId>
+      <version>1.0.199</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>https://repo.clojars.org/</url>
+    </repository>
+  </repositories>
+  <distributionManagement>
+    <repository>
+      <id>clojars</id>
+      <name>Clojars repository</name>
+      <url>https://clojars.org/repo</url>
+    </repository>
+  </distributionManagement>
+</project>

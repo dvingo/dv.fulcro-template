@@ -1,0 +1,15 @@
+{:taoensso.timbre/logging-config
+   {:level        :debug
+    :ns-blacklist ["shadow.cljs.devtools.server.worker.impl"]}
+
+ :io.pedestal.http/config
+   {:env :dev}
+
+ :{{namespace}}.server.pathom-parser/config
+   {:connect-viz?    true
+    :index-explorer? true
+    :trace?          true
+    :log-responses?  true}
+
+ :{{namespace}}.server.service/config
+   {:dev? true}}

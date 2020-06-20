@@ -1,0 +1,81 @@
+{:deps
+ {:aliases [:dev]}
+
+ :nrepl
+ {:port 9000}
+
+ :builds
+ {:main        {:target            :browser
+                :output-dir        "resources/public/js/main"
+                :asset-path        "/js/main"
+                :module-hash-names true
+                :modules           {:main {:init-fn {{namespace}}.client.client-entry/init
+                                           :entries [{{namespace}}.client.client-entry]}}
+                ;; guardrails checks only during dev
+                :dev               {:compiler-options {:external-config {:guardrails {}
+                                                                         :fulcro     {:wrap-inputs? false}}}
+                                    :closure-defines  {
+                                                       {{namespace}}.client.application/LOG-RESPONSES true
+                                                       {{namespace}}.client.client-entry/LOG_LEVEL    "debug"}}
+                :devtools          {:after-load {{namespace}}.client.client-entry/refresh
+                                    :preloads   [;; if using the chrome extension:
+                                                 com.fulcrologic.fulcro.inspect.preload
+
+                                                 ;; if using the electron app:
+                                                 ;com.fulcrologic.fulcro.inspect.websocket-preload
+
+                                                 {{namespace}}.client.development-preload]
+                                    {{^server?}}
+                                    :http-port 8021
+                                    :http-resource-root "public"
+                                    :http-root          "resources/public/"
+                                    {{/server?}}}}
+  {{#node-server?}}
+  :node-server {:target    :node-script
+                :main      {{namespace}}.node-server/main
+                :output-to "builds/node-server/node-server.js"
+                :devtools  {:before-load-async {{namespace}}.node-server/stop
+                            :after-load        {{namespace}}.node-server/start}}
+  {{/node-server?}}
+   {{#test?}}
+  :test        {:target           :browser-test
+                :test-dir         "resources/public/js/test"
+                :ns-regexp        "-test$"
+                ;; static required for mocking to work
+                :compiler-options {:static-fns      false
+                                   :external-config {:guardrails {}}}
+                :devtools         {:http-port          8022
+                                   :http-resource-root "public"
+                                   :http-root          "resources/public/js/test"}}
+
+  :ci-tests    {:target           :karma
+                :js-options       {:js-provider :shadow}
+                :compiler-options {:static-fns false} ; required for mocking to work
+                :output-to        "target/ci.js"
+                :ns-regexp        "-test$"}
+  {{/test?}}
+    {{#devcards?}}
+     :devcards {:target     :browser
+                :output-dir "resources/public/devcards/js"
+                :asset-path "/js"
+
+                :modules    {:devcards {:entries [{{namespace}}.devcards]
+                                        :init-fn {{namespace}}.devcards/main}}
+
+                :devtools   {:http-port        4001
+                             :http-root        "resources/public/devcards"
+                             :push-state/index "devcards.html"
+                             :after-load       {{namespace}}.devcards/main}
+                :compiler-options {:devcards true}}
+     {{/devcards?}}
+    {{#workspaces?}}
+  :workspaces  {:target     :browser
+                :modules    {:workspaces {:entries [{{namespace}}.main-ws]
+                                          :init-fn {{namespace}}.main-ws/main}}
+                ;:ns-regexp  "-(test|ws)$"
+                :output-dir "resources/public/workspaces/js"
+                :asset-path "/js"
+                :devtools   {
+                             :http-root          "resources/public/workspaces"
+                             :push-state/index   "workspaces.html"
+                             :http-port          8023}}{{/workspaces?}}}}
