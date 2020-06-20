@@ -188,21 +188,22 @@
 (defn make-service-map
   ([] (make-service-map (service config)))
   ([base-map]
-   (-> base-map
-     (merge {:env                   :dev
-             ::http/join?           false
-             ::http/allowed-origins {:creds true :allowed-origins (constantly true)}})
+   (let [dev? (#{:dev} (:env base-map))]
+     (-> base-map
+       (cond->
+         dev?
+         (assoc ::http/allowed-origins {:creds true :allowed-origins (constantly true)}))
 
-     http/default-interceptors
-     ;; By default enabling csrf in pedestal also enables body parsing.
-     ;; We remove it as muuntaja does content negotiation.
-     (update ::http/interceptors
-       (fn [ints]
-         (vec (remove #(= (:name %) :io.pedestal.http.body-params/body-params) ints))))
+       http/default-interceptors
+       ;; By default enabling csrf in pedestal also enables body parsing.
+       ;; We remove it as muuntaja does content negotiation.
+       (update ::http/interceptors
+         (fn [ints]
+           (vec (remove #(= (:name %) :io.pedestal.http.body-params/body-params) ints))))
 
-     ;; use reitit for routing
-     (rpedestal/replace-last-interceptor (router (::config config)))
-     (update ::http/interceptors conj (interceptor/interceptor logger))
-     (cond-> (= (:env base-map) :dev) http/dev-interceptors))))
+       ;; use reitit for routing
+       (rpedestal/replace-last-interceptor (router (::config config)))
+       (update ::http/interceptors conj (interceptor/interceptor logger))
+       (cond-> dev? http/dev-interceptors)))))
 
 (comment (make-service-map (service config)))

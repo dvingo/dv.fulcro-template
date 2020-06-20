@@ -10,9 +10,9 @@
 
 (defstate http-server
   :start
-  (let [c       (::http/config config)
-        service (merge (service/make-service-map) c)
-        port (::http/port c)]
+  (let [pedestal-config       (::http/config config)
+        service (merge (service/make-service-map) pedestal-config)
+        port (::http/port pedestal-config)]
     (when (nil? port)
       (throw (Exception. "You must set a port as the environment variable PORT.")))
     (log/info "Final service config: ")

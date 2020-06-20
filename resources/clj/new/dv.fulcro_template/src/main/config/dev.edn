@@ -3,7 +3,8 @@
     :ns-blacklist ["shadow.cljs.devtools.server.worker.impl"]}
 
  :io.pedestal.http/config
-   {:env :dev}
+ {:env :dev
+  :io.pedestal.http/join? false}
 
  :{{namespace}}.server.pathom-parser/config
    {:connect-viz?    true
