@@ -86,14 +86,14 @@ make start-prod-server
 ```
 {{/server?}}
 
-{{#workspaces}}
+{{#workspaces?}}
 ## Workspaces
 Workspaces are available at:
 
 http://127.0.0.1:8023
 
 Again, the port may be different if 8023 is already in use.
-{{/workspaces}}
+{{/workspaces?}}
 
 {{#devcards?}}
 ## Devcards
