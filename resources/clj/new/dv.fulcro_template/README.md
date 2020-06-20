@@ -7,6 +7,8 @@ This template uses `yarn` to handle npm dependencies.
 
 # Start dev
 
+## Shadow cljs tasks
+
 In one terminal:
 
 ```bash
@@ -55,7 +57,7 @@ Using this repl you connect to the various clojurescript builds using `(shadow/r
 
 nREPL local
 
-alias: dev
+alias: dev,test
 
 start backend repl, then:
 
@@ -64,22 +66,25 @@ start backend repl, then:
 ```
 This uses mount to start web server.
 
-### Clojure webserver.
+_note_ you do not need to specify any JVM parameters.
+
+## Clojure webserver.
 
 The clojure webserver listens on port 8085 by default - this is specified in `src/main/config/defaults.edn`
 
 http://localhost:8085
 
-after opening the browser, then you can connect a clojurescript repl to the app:
+# Production server build
 
-```clojure
-(shadow/repl :main)
+All builds are handled by tasks in the Makefile.
+
+```bash
+make be-release
+
+# Start the server with:
+make start-prod-server
 ```
 {{/server?}}
-
-## Shadow cljs dashboard
-
-http://127.0.0.1:9630
 
 {{#workspaces}}
 ## Workspaces

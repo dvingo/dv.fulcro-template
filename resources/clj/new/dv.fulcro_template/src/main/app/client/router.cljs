@@ -33,6 +33,12 @@
         (assoc prop-map :path path-str))
       grouped)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Declare your app routes here
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; in a component use (r/route-segment :tasks) to ge the fulcro segment.
+
 (def routes
   [["/" {:name :root :segment ["signup"]}]
    ["/tasks" {:name :tasks :segment ["tasks"]}]

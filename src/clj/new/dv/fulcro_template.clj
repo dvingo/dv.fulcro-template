@@ -71,7 +71,7 @@
   "Generate Scaffold for fulcro using tools.deps"
   [name & options]
   (let [data (template-data name options)]
-    (println "DATA : ") (pprint data)
+    ;(println "DATA : ") (pprint data)
     (check-options options)
     (println "Generating fresh 'clj new' dv.fulcro-template project.")
     (apply ->files data (app-files data options))))

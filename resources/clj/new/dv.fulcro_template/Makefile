@@ -65,7 +65,7 @@ clean:
 > rm deploy/$(server-jar-file)
 
 start-dev-server:
-> clojure -A:dev -J-Dtrace -J-Dghostwheel.enabled=true
+> clojure -A:dev
 
 start-prod-server:
 > pushd deploy
