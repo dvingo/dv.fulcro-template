@@ -29,30 +29,28 @@
 (defn get-js-filename []
   (:output-name (first (fu/load-edn manifest-file))))
 
-(comment
-  (get-js-filename)
-  (select-keys
-    (first (load-edn (io/resource manifest-file)))
-    [:module-id :name :output-name :depends-on]))
-
 ;; ================================================================================
 ;; Dynamically generated HTML. We do this so we can safely embed the CSRF token
 ;; in a js var for use by the client, and to use hashed filename output from shadow.
 ;; ================================================================================
 (defn index [csrf-token]
-  (log/debug "Serving index.html")
-  (html5
-    [:head {:lang "en"}
-     [:title "Application"]
-     [:meta {:charset "utf-8"}]
-     [:meta {:name "viewport" :content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}]
-     [:link {:href "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
-             :rel  "stylesheet"}]
-     [:link {:rel "shortcut icon" :href "data:image/x-icon;," :type "image/x-icon"}]
-     [:script (str "var fulcro_network_csrf_token = '" csrf-token "';")]]
-    [:body
-     [:div#app]
-     [:script {:src (str "/js/main/" (get-js-filename))}]]))
+  (if-let [js-filename (get-js-filename)]
+    (do (log/debug "Serving index.html")
+        (html5
+          [:head {:lang "en"}
+           [:title "Application"]
+           [:meta {:charset "utf-8"}]
+           [:meta {:name "viewport" :content "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"}]
+           [:link {:href "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+                   :rel  "stylesheet"}]
+           [:link {:rel "shortcut icon" :href "data:image/x-icon;," :type "image/x-icon"}]
+           [:script (str "var fulcro_network_csrf_token = '" csrf-token "';")]]
+          [:body
+           [:div#app]
+           [:script {:src (str "/js/main/" (get-js-filename))}]]))
+    (throw (Exception. (str "Error reading JavaScript filename from shadow-cljs manifest.edn file.
+    The filename is nil, you probably need to wait for the shadow-cljs build to complete or start it again.
+    Check manifest.edn in the shadow-cljs build directory.")))))
 
 (>defn html-response
   [html]

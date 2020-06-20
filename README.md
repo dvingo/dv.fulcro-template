@@ -7,10 +7,11 @@ This is a work in progress and reflects one style of app layout.
 Feel free to remove or change any parts of the generated code.
 
 It was based on the fulcro3 template: https://github.com/fulcrologic/fulcro-template
+but differs in backend tech and will continue to diverge as features are added to this template.
 
 # Use it
 
-Add a `new` alias to your user deps.edn file see:
+Add a `new` alias to your user deps.edn file. For instructions see:
 
 https://github.com/seancorfield/dot-clojure
 

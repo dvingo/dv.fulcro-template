@@ -123,9 +123,7 @@
   (dr/current-route SPA))
 
 (defn current-route-from-url []
-  (let [match (rf/match-by-path router (g/get js/location "pathname"))]
-    (log/info "match: " match)
-    match))
+  (rf/match-by-path router (g/get js/location "pathname")))
 
 (defn current-route-name
   "Returns the keyword name of the current route as determined by the URL path."
@@ -145,6 +143,7 @@
   match current reitit match of the url"
   [route-key params]
   (route=url?* route-key params (current-route-from-url)))
+
 (comment (route=url? :goals {:date "2020-05-12"}))
 
 (>defn change-route!

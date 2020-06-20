@@ -1,5 +1,9 @@
+# Prerequisites
+
 This template utilizes GNU Make 4.x. You'll need to install it first 
 before executing `make`.
+
+This template uses `yarn` to handle npm dependencies.
 
 # Start dev
 
@@ -17,6 +21,8 @@ In another terminal run:
 make fe
 ```
 This starts the shadow cljs watches.
+
+Alternatively you can start the build watches via the shadow-cljs interface in the browser.
 
 Please see the `shadow-cljs.edn` file for ports used for development builds.
 
@@ -44,16 +50,12 @@ The $port defaults to 9000 but may be different if 9000 is already in use.
 
 Using this repl you connect to the various clojurescript builds using `(shadow/repl :build-id)`
 
+{{#server?}}
 ### backend repl:
 
 nREPL local
 
 alias: dev
-
-JVM Args: `-Dguardrails.enabled=true`
-
-The `-Dguardrails.enabled=true` turns on guardrails instrumentation of guardrails spec'd functions, which is a wrapper
-of Clojure spec that makes instrumentation and production-time elision (for performance and size) much easier.
 
 start backend repl, then:
 
@@ -73,6 +75,7 @@ after opening the browser, then you can connect a clojurescript repl to the app:
 ```clojure
 (shadow/repl :main)
 ```
+{{/server?}}
 
 ## Shadow cljs dashboard
 
