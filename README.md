@@ -1,5 +1,7 @@
 # fulcro app template
 
+[![Clojars Project](https://img.shields.io/clojars/v/dv.fulcro-template/clj-template.svg)](https://clojars.org/dv.fulcro-template/clj-template)
+
 A Clojure tools.deps template for quickly creating a fulcro application.
 
 This is a work in progress and reflects one style of app layout.
