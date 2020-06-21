@@ -5,7 +5,8 @@ SHELL := bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
-server-jar-file := server.jar
+{{#server?}}server-jar-file := server.jar{{/server?}}
+{{#node-server?}}node-server-file := node-server.js{{/node-server?}}
 fe-module := main
 
 ifeq ($(origin .RECIPEPREFIX), undefined)
@@ -53,13 +54,13 @@ fe-test:
 watch-all: watch-$(fe-module){{#workspaces?}}watch-workspaces{{/workspaces?}}{{#test?}}watch-client-test{{/test?}}
 
 fe-release:
-> yarn shadow-cljs release $(fe-module)
+> bash ./scripts/build_fe_release.sh $(fe-module)
 
 {{#server?}}
 deploy/$(server-jar-file):
 > clojure -A:depstar -m hf.depstar.uberjar deploy/$(server-jar-file)
 
-be-release: deploy/$(server-jar-file)
+be-release: deploy/$(server-jar-file) {{#node-server?}}builds/$(node-server-file)){{/node-server?}}
 
 clean:
 > rm deploy/$(server-jar-file)
@@ -69,7 +70,7 @@ start-dev-server:
 
 start-prod-server:
 > pushd deploy
-> java -cp app.jar clojure.main -m {{namespace}}.server.server-entry
+> java -cp $(server-jar-file) clojure.main -m {{namespace}}.server.server-entry
 {{/server?}}
 
 .PHONY: fe fe-release prod-build shadow-report watch-$(fe-module) watch shadow-server

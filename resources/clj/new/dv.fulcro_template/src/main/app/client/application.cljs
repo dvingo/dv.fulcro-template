@@ -2,7 +2,8 @@
   (:require
     [com.fulcrologic.fulcro.application :as app]
     [com.fulcrologic.fulcro.networking.http-remote :as net]
-    [sablono.core :as html :refer-macros [html]]
+    [{{namespace}}.client.prn-debug :refer [pprint-str]]
+    [sablono.core :refer [html]]
     [taoensso.timbre :as log]))
 
 {{#server?}}
@@ -20,7 +21,6 @@
     "TOKEN-NOT-IN-HTML!"))
 
 (defn request-middleware []
-  (js/console.log "js/fulcro_network_csrf_token: " (get-token))
   ;; The CSRF token is embedded via service.clj
   (->
     (net/wrap-csrf-token (get-token))
@@ -31,8 +31,8 @@
 (defn resp-logger [handler]
   (fn [resp]
     (let [out (handler resp)]
-      (log/info "\nRESPONSE: ")
-      ;(log/info "RESP_LOGGER: ") (log/info (with-out-str (pprint out)))
+      ;(log/info "\nRESPONSE: ")
+      ;(log/info (pprint-str out))
       out)))
 
 (defn response-middleware []
@@ -58,7 +58,6 @@
       (let [mutation-sym    (-> body keys first)
             response-error? (-> body mutation-sym :server/error?)
             pathom-error    (-> body mutation-sym :com.wsscode.pathom.core/reader-error)]
-        (log/info "Result body: " body)
         (boolean (or response-error? pathom-error)))
       false)))
 

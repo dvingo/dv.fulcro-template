@@ -13,8 +13,8 @@
      ["shadow-cljs.edn" (helpers/render "shadow-cljs.edn" data)]
 
      ;; Scripts
-     ["scripts/build_prod.sh" (helpers/render "scripts/build_prod.sh" data)]
      ["scripts/start_dev.sh" (helpers/render "scripts/start_dev.sh" data)]
+     ["scripts/build_fe_release.sh" (helpers/render "scripts/build_fe_release.sh" data)]
 
      ;; Client
      ["src/main/{{nested-dirs}}/client/application.cljs" (helpers/render "src/main/app/client/application.cljs" data)]

@@ -4,9 +4,7 @@
 (def option "+server")
 
 (defn files [data]
-  [
-
-   ;;auth
+  [;;auth
    ["src/main/{{nested-dirs}}/auth/session.clj" (helpers/render "src/main/app/auth/session.clj" data)]
    ["src/main/{{nested-dirs}}/auth/session.cljs" (helpers/render "src/main/app/auth/session.cljs" data)]
    ["src/main/{{nested-dirs}}/auth/user.clj" (helpers/render "src/main/app/auth/user.clj" data)]
