@@ -21,7 +21,7 @@ shadow-server:
 fe:
 > bash ./scripts/start_dev.sh
 
-prod-build: fe-release {{#server?}}be-release{{/server?}}
+prod-build: fe-release{{#server?}} be-release{{/server?}}{{#node-server?}} node-server-release{{/node-server?}}
 
 shadow-report:
 > yarn shadow-cljs run shadow.cljs.build-report $(fe-module) fe-bundle-report.html
@@ -56,14 +56,24 @@ watch-all: watch-$(fe-module){{#workspaces?}}watch-workspaces{{/workspaces?}}{{#
 fe-release:
 > bash ./scripts/build_fe_release.sh $(fe-module)
 
+{{#node-server?}}
+builds/$(node-server-file):
+> yarn shadow-cljs release node-server
+
+node-server-release: builds/$(node-server-file)
+{{/node-server?}}
+
 {{#server?}}
 deploy/$(server-jar-file):
 > clojure -A:depstar -m hf.depstar.uberjar deploy/$(server-jar-file)
 
-be-release: deploy/$(server-jar-file) {{#node-server?}}builds/$(node-server-file)){{/node-server?}}
+be-release: deploy/$(server-jar-file)
 
 clean:
 > rm deploy/$(server-jar-file)
+{{#node-server?}}
+> rm builds/node-server/$(node-server-file)
+{{/node-server?}}
 
 start-dev-server:
 > clojure -A:dev

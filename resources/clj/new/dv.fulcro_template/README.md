@@ -78,10 +78,20 @@ http://localhost:8085
 
 All builds are handled by tasks in the Makefile.
 
+
+Both frontend and backend builds:
+```bash
+make prod-build
+```
+
+Server jar only:
+
 ```bash
 make be-release
+```
 
-# Start the server with:
+Run the prod server:
+```bash
 make start-prod-server
 ```
 {{/server?}}
