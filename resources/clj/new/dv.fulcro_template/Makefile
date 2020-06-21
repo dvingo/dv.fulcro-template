@@ -30,17 +30,14 @@ watch-$(fe-module):
 > yarn shadow-cljs watch :$(fe-module)
 
 watch: watch-$(fe-module)
-
 {{#workspaces?}}
 watch-workspaces:
 > yarn shadow-cljs watch :workspaces
 {{/workspaces?}}
-
 {{#devcards?}}
 watch-devcards:
 > yarn shadow-cljs watch :devcards
 {{/devcards?}}
-
 {{#test?}}
 watch-client-test:
 > yarn shadow-cljs watch :test
@@ -50,19 +47,16 @@ fe-test:
 > yarn karma start --single-run
 > clj -A:dev:clj-tests
 {{/test?}}
-
 watch-all: watch-$(fe-module){{#workspaces?}}watch-workspaces{{/workspaces?}}{{#test?}}watch-client-test{{/test?}}
 
 fe-release:
 > bash ./scripts/build_fe_release.sh $(fe-module)
-
 {{#node-server?}}
 builds/$(node-server-file):
 > yarn shadow-cljs release node-server
 
 node-server-release: builds/$(node-server-file)
 {{/node-server?}}
-
 {{#server?}}
 deploy/$(server-jar-file):
 > clojure -A:depstar -m hf.depstar.uberjar deploy/$(server-jar-file)
