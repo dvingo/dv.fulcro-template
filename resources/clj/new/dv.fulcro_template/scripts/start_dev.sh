@@ -36,7 +36,7 @@ main() {
 
   Starting shadow-cljs watches for you via the following command:
 
-  yarn run shadow-cljs watch main{{#node-server?}} node-server{{/node-server?}}{{#test?}} test{{/test?}}{{#workspaces?}} workspaces{{/workspaces?}}
+  yarn run shadow-cljs watch main{{#node-server?}} node-server{{/node-server?}}{{#test?}} test{{/test?}}{{#devcards?}} devcards{{/devcards?}}{{#workspaces?}} workspaces{{/workspaces?}}
 
   # shadow-cljs builds:
   http://localhost:9630
@@ -62,7 +62,7 @@ main() {
 {{/workspaces?}}
 '
 
-  yarn run shadow-cljs watch main {{#node-server?}}node-server{{/node-server?}} {{#test?}}test{{/test?}} {{#devcards?}}devcards{{/devcards?}} {{#workspaces?}}workspaces{{/workspaces?}}
+  yarn run shadow-cljs watch main{{#node-server?}} node-server{{/node-server?}}{{#test?}} test{{/test?}}{{#devcards?}} devcards{{/devcards?}}{{#workspaces?}} workspaces{{/workspaces?}}
 }
 
 main "$@"
