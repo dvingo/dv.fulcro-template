@@ -48,20 +48,21 @@
   {:router-targets [TaskPage]})
 
 (def ui-top-router (c/factory TopRouter))
-  (defsc PageContainer [this {:root/keys [router] :as props}]
-    {:query         [{:root/router (c/get-query TopRouter)}
-                     [::sm/asm-id ::TopRouter]]
-     :ident         (fn [] [:component/id :page-container])
-     :initial-state (fn [_] {:root/router (c/get-initial-state TopRouter {})})}
-    (let [current-tab (r/current-route this)]
-      [:.ui.container
-       [:.ui.secondary.pointing.menu
-         (mapv r/link [:root])]
-       ^:inline (ui-top-router router)]))
-  {{/server?}}
+
+(defsc PageContainer [this {:root/keys [router] :as props}]
+  {:query         [{:root/router (c/get-query TopRouter)}
+                   [::sm/asm-id ::TopRouter]]
+   :ident         (fn [] [:component/id :page-container])
+   :initial-state (fn [_] {:root/router (c/get-initial-state TopRouter {})})}
+  [:.ui.container
+   [:.ui.secondary.pointing.menu
+     (mapv r/link [:root])]
+   ^:inline (ui-top-router router)])
+{{/server?}}
 
 (def ui-page-container (c/factory PageContainer))
 
+ ;; todo you can get rid of PageContainer and just put it here and remove one level of nesting.
 (defsc Root [_ {:root/keys [page-container]}]
   {:query         [{:root/page-container (c/get-query PageContainer)}]
    :initial-state (fn [_] {:root/page-container (c/get-initial-state PageContainer {})})}
