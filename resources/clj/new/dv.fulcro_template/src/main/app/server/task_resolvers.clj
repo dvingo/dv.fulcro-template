@@ -18,12 +18,6 @@
      [msg# (cond ~@args)]
      (fu/server-error msg#)))
 
-(defn conj-vec [entity fkw val]
-  (update entity fkw #(conj (or % []) val)))
-
-(defn conj-set [entity fkw val]
-  (update entity fkw #(conj (or (set %) #{}) val)))
-
 (pc/defmutation create-task-mutation
   [{:keys [current-user crux-node]}
    {:task/keys [id description] :as props}]
@@ -38,7 +32,7 @@
         "A task with that description already exists.")
 
       (let [task (dm/make-db-task props)
-            new-user (dl/read-merge-user (conj-vec current-user :user/tasks id))]
+            new-user (dl/read-merge-user (fu/conj-vec current-user :user/tasks id))]
         (log/info "Submitting tx for creating task")
         (pprint [task new-user])
         (cu/put-all crux-node [task new-user])))))

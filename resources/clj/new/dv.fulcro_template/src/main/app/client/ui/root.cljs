@@ -11,7 +11,8 @@
     [{{namespace}}.client.ui.task-page :refer [TaskPage]]
     {{#server?}}
     [{{namespace}}.auth.login :refer [ui-login Login Session session-join valid-session?]]
-    [{{namespace}}.auth.signup :refer [Signup]]{{/server?}}))
+    [{{namespace}}.auth.signup :refer [Signup]]{{/server?}}
+    [taoensso.timbre :as log]))
 
 {{#server?}}
  (dr/defrouter TopRouter
