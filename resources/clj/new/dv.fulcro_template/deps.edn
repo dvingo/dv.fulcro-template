@@ -4,20 +4,15 @@
            org.clojure/spec.alpha              {:mvn/version "0.2.187"}
            com.taoensso/timbre                 {:mvn/version "4.10.0"}
            com.taoensso/tufte                  {:mvn/version "2.1.0"}
-
            com.fulcrologic/fulcro              {:mvn/version "3.2.9"
                                                 :exclusions  [com.cognitect/transit-cljs
                                                               com.cognitect/transit-js]}
-
            com.cognitect/transit-cljs          {:mvn/version "0.8.264"}
-
            com.fulcrologic/semantic-ui-wrapper {:mvn/version "1.0.1"}
            com.fulcrologic/guardrails          {:mvn/version "0.0.12"}
            dv/clj-utils                        {:mvn/version "2020-06-09-b"}
-
            sablono                             {:mvn/version "0.8.6"}
            org.clojure/core.async              {:mvn/version "1.2.603"}
-
            {{#node-server?}}
            ;; http requests for node.js
            funcool/httpurr                     {:mvn/version "2.0.0"}
@@ -27,23 +22,18 @@
             metosin/reitit-pedestal             {:mvn/version "0.5.2"}
             com.wsscode/pathom                  {:mvn/version "2.2.31"}
             hiccup                              {:mvn/version "2.0.0-alpha2"}
-
             mount                               {:mvn/version "0.1.16"}
-
             ring/ring-core                      {:mvn/version "1.8.1"}
             ring/ring-defaults                  {:mvn/version "0.3.2"}
             bk/ring-gzip                        {:mvn/version "0.3.0"}
-
             ;; Crux
             juxt/crux-core                      {:mvn/version "20.05-1.8.4-alpha"}
             juxt/crux-rocksdb                   {:mvn/version "20.05-1.8.4-alpha"}
             juxt/crux-metrics                   {:mvn/version "20.05-1.8.4-alpha"}
             ;juxt/crux-http-server               {:mvn/version "20.05-1.8.4-alpha"}
-
             ;; Pedestal
             io.pedestal/pedestal.service        {:mvn/version "0.5.8"}
             io.pedestal/pedestal.jetty          {:mvn/version "0.5.8"}
-
             ;; Password hashing
             cryptohash-clj                      {:mvn/version "0.1.6"}{{/server?}}}
 
@@ -54,7 +44,7 @@
                        :extra-deps  {lambdaisland/kaocha {:mvn/version "0.0-529"}}}
            {{/test?}}
              :dev       {:extra-paths ["src/dev"{{#test?}} "src/test"{{/test?}}{{#workspaces?}} "src/workspaces"{{/workspaces?}}{{#devcards?}} "src/devcards"{{/devcards?}}]
-                       :jvm-opts    ["-XX:-OmitStackTraceInFastThrow"]
+                       :jvm-opts    ["-XX:-OmitStackTraceInFastThrow" "-Dguardrails.enabled"]
 
                        :extra-deps  {org.clojure/clojurescript           {:mvn/version "1.10.773"}
                                      org.clojure/test.check              {:mvn/version "1.0.0"}
