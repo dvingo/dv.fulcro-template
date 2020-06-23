@@ -60,7 +60,7 @@
                                      {{#devcards?}}
                                      devcards                            {:mvn/version "0.2.7"}
                                      {{/devcards?}}
-                                     dv/cljs-emotion                     {:mvn/version "version-two"}
+                                      dv/cljs-emotion                    {:mvn/version "2020-06-23-1"}
                                      ;; Formats spec explain.
                                      expound                             {:mvn/version "0.8.4"}
                                      fulcrologic/fulcro-spec             {:mvn/version "3.1.4"}
