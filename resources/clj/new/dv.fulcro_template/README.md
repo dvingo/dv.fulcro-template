@@ -57,7 +57,7 @@ Using this repl you connect to the various clojurescript builds using `(shadow/r
 
 nREPL local
 
-alias: dev,test
+enabled these deps aliases: dev, test, guardrails
 
 start backend repl, then:
 

@@ -3,7 +3,8 @@
     [com.fulcrologic.fulcro.application :as app]
     [com.fulcrologic.fulcro.networking.http-remote :as net]
     [{{namespace}}.client.prn-debug :refer [pprint-str]]
-    [sablono.core :refer [html]]
+    [reagent.core :as r]
+    [reagent.dom :as rdom]
     [taoensso.timbre :as log]))
 
 {{#server?}}
@@ -79,12 +80,14 @@
     resp))
 (defonce SPA
   (app/fulcro-app
-    {:render-middleware (fn [this render] (html (render)))
+    {:render-middleware (fn [this render] (r/as-element (render)))
      :remote-error?     remote-error?
+     :render-root!      rdom/render
      :remotes           {:remote (api-remote)}}))
 {{/server?}}
 {{^server?}}
 (defonce SPA
   (app/fulcro-app
-    {:render-middleware (fn [this render] (html (render)))}))
+    {:render-middleware (fn [this render] (r/as-element (render)))
+     :render-root!      rdom/render}))
 {{/server?}}

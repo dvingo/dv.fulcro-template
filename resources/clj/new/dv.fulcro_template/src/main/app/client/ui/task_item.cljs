@@ -8,18 +8,9 @@
     [com.fulcrologic.fulcro.dom :as dom]
     [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
-    [com.fulcrologic.semantic-ui.collections.form.ui-form :refer [ui-form]]
-    [com.fulcrologic.semantic-ui.collections.form.ui-form-button :refer [ui-form-button]]
-    [com.fulcrologic.semantic-ui.collections.form.ui-form-field :refer [ui-form-field]]
-    [com.fulcrologic.semantic-ui.modules.checkbox.ui-checkbox :refer [ui-checkbox]]
-    [com.fulcrologic.semantic-ui.modules.dropdown.ui-dropdown :refer [ui-dropdown]]
-    [com.fulcrologic.semantic-ui.modules.dropdown.ui-dropdown-item :refer [ui-dropdown-item]]
-    [com.fulcrologic.semantic-ui.modules.dropdown.ui-dropdown-menu :refer [ui-dropdown-menu]]
-    [com.fulcrologic.semantic-ui.modules.transition.ui-transition :refer [ui-transition]]
     [dv.fulcro-util :as fu]
     [dv.fulcro-entity-state-machine :as fmachine]
     [{{namespace}}.data-model.task :as dm]
-    [sablono.core :refer [html]]
     [taoensso.timbre :as log]))
 
 (defsc TaskItem
@@ -45,10 +36,8 @@
 
 (defn task-item-card
   [{:task/keys [id description]}]
-  [:.ui.card {:key id}
-   [:.content
-    [:.ui.tiny.horizontal.list
-     [:.item description]]]])
+  [:div.ui.card {:key id}
+   [:div.content>div.ui.tiny.horizontal.list>div.item description]])
 
 (defn empty-form [] (dm/make-task {:task/description ""}))
 
@@ -81,40 +70,38 @@
    :componentDidMount (fn [this] (fmachine/begin! this ::form-machine TaskItemReturn))}
   (let [{:keys [checked? disabled?]} (fu/validator-state validator props)]
     [:div
-     ^:inline (fu/notification {:ui/submit-state machine-state :ui/server-message message})
+      (fu/notification {:ui/submit-state machine-state :ui/server-message message})
      #_(when goog.DEBUG
          (fu/ui-button #(m/toggle! this :ui/show-form-debug?) "Debug form"))
      #_(fu/form-debug validator this show-form-debug?)
 
      [:h3 nil "Enter a new task"]
 
-     (ui-form #js{:className (when checked? "error") :as "div"
-                  :onChange  (fn [e]
-                               (sm/trigger! this ::form-machine :event/reset)
-                               true)}
-       (ui-form-field nil
-         (fu/ui-textfield this "Task Description" :task/description props :tabIndex 1
-           :autofocus? true))
+     [:div.ui.form
+        {:class (when checked? "error")
+         :onChange  (fn [e] (sm/trigger! this ::form-machine :event/reset)
+                            true)}
+      [:div.field
+       (fu/ui-textfield this "Task Description" :task/description props :tabIndex 1
+         :autofocus? true)]
 
-       (html [:.ui.grid
-              [:.column.four.wide
-               [:button
-                {:tabIndex 2
-                 :disabled disabled?
-                 :onClick  (fu/prevent-default
-                             #(let [task (dm/fresh-task props)]
-                                (fmachine/submit-entity! this
-                                  {:entity          task
-                                   :machine         ::form-machine
-                                   :remote-mutation `create-task
-                                   :on-reset        cb-on-submit
-                                   :target          {:append [:all-tasks]}})))
-                 :class    (str "ui primary button" (when loading? " loading"))}
-                "Enter"]]
+      [:div.ui.grid
+       [:div.column.four.wide>button
+        {:tabIndex 2
+         :disabled disabled?
+         :onClick  (fu/prevent-default
+                     #(let [task (dm/fresh-task props)]
+                        (fmachine/submit-entity! this
+                          {:entity          task
+                           :machine         ::form-machine
+                           :remote-mutation `create-task
+                           :on-reset        cb-on-submit
+                           :target          {:append [:all-tasks]}})))
+         :class    (str "ui primary button" (when loading? " loading"))}
+        "Enter"]
 
-              (when on-cancel
-                [:.column.four.wide
-                 [:button :.ui.secondary.button.column
-                  {:on-click on-cancel} "Cancel"]])]))]))
+       (when on-cancel
+         [:div.column.four.wide>button.ui.secondary.button.column
+          {:on-click on-cancel} "Cancel"])]]]))
 
 (def ui-task-form (c/factory TaskForm {:keyfn :task/id}))

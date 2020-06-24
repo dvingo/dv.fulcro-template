@@ -39,9 +39,9 @@
                              [:component/id :session] (c/get-initial-state Session {})})}
     (let [current-tab (r/current-route this)
           session? (valid-session? props)]
-      [:.ui.container
-       ^:inline (menu {:session? session? :login login})
-       ^:inline (ui-top-router router)]))
+      [:div.ui.container
+        (menu {:session? session? :login login})
+        (ui-top-router router)]))
 {{/server?}}
 {{^server?}}
 (dr/defrouter TopRouter
@@ -55,10 +55,9 @@
                    [::sm/asm-id ::TopRouter]]
    :ident         (fn [] [:component/id :page-container])
    :initial-state (fn [_] {:root/router (c/get-initial-state TopRouter {})})}
-  [:.ui.container
-   [:.ui.secondary.pointing.menu
-     (mapv r/link [:root])]
-   ^:inline (ui-top-router router)])
+  [:div.ui.container
+   [:div.ui.secondary.pointing.menu (map r/link [:root])]
+   (ui-top-router router)])
 {{/server?}}
 
 (def ui-page-container (c/factory PageContainer))
@@ -67,4 +66,4 @@
 (defsc Root [_ {:root/keys [page-container]}]
   {:query         [{:root/page-container (c/get-query PageContainer)}]
    :initial-state (fn [_] {:root/page-container (c/get-initial-state PageContainer {})})}
-  ^:inline (ui-page-container page-container))
+  (ui-page-container page-container))

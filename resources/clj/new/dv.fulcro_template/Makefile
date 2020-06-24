@@ -16,7 +16,7 @@ endif
 
 shadow-server:
 > yarn
-> yarn shadow-cljs server
+> yarn shadow-cljs server -A:guardrails
 
 fe:
 > bash ./scripts/start_dev.sh
