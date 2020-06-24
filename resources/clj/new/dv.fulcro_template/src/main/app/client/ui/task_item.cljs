@@ -29,7 +29,7 @@
   {:initial-state {}
    :query         [{[:all-tasks '_] (c/get-query TaskItem)}]}
   [:div "This is the list of tasks"
-   [:.ui.divider]
+   [:div.ui.divider]
    (map ui-task-item all-tasks)])
 
 (def ui-task-list (c/factory TaskList))
