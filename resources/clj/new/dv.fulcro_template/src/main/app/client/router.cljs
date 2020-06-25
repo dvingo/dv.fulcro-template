@@ -169,10 +169,10 @@
        (rfe/push-state name params)))))
 
 (defn change-route-to-default! [this]
-  (change-route! this :signup))
+  (change-route! :signup))
 
 (defn change-route-after-signout! [this]
-  (change-route! this :signup))
+  (change-route! :signup))
 
 (defn link
   ([target]

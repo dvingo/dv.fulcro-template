@@ -11,7 +11,6 @@
     [com.fulcrologic.fulcro.ui-state-machines :as sm :refer [defstatemachine]]
     [goog.object :as g]
     [goog.events :as events :refer [EventType]]
-    [sablono.core :as html :refer-macros [html]]
     [dv.fulcro-util :as fu]
     [dv.cljs-emotion :refer [defstyled]]
     [{{namespace}}.auth.session :as session]
@@ -61,7 +60,7 @@
         (dom/p "Don't have an account?")
         (dom/a {:onClick (fn []
                            (sm/trigger! this ::session/session :event/toggle-modal {})
-                           (r/change-route! this :signup))}
+                           (r/change-route! :signup))}
           "Please sign up!")))))
 
 (def session-join {[:component/id :session] (comp/get-query Session)})
@@ -108,7 +107,7 @@
         logged-in?      session-valid?
         password        (or (comp/get-state this :password) "") ; c.l. state for security
         form-valid?     (and (fu/valid-email? email) (fu/valid-password? password))]
-    [:.right.menu {:ref (fn [r] (g/set this "el" r))}
+    [:div.right.menu {:ref (fn [r] (g/set this "el" r))}
 
      (when-not on-start-state?
        (if logged-in?
@@ -116,12 +115,12 @@
           {:on-click #(sm/trigger! this ::session/session :event/logout)}
           (fu/hover-hand nil (str current-user ent/nbsp "Log out"))]
 
-         [html/fragment
-          ^:inline (r/link :signup
-                     {:onClick
-                      (fn []
-                        (when open? (close-modal! this))
-                        (r/change-route! this :signup))})
+         [:<>
+          (r/link :signup
+            {:onClick
+             (fn []
+               (when open? (close-modal! this))
+               (r/change-route! :signup))})
 
           [:div {:className "item" :key "login" :onClick #(toggle-modal! this)}
            (fu/hover-hand #js{:key "login-label"} "Login")

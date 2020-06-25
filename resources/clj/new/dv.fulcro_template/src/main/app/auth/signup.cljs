@@ -14,7 +14,6 @@
     [{{namespace}}.auth.session :as session]
     [{{namespace}}.client.router :as r]
     [{{namespace}}.auth.login :refer [session-join Session get-session]]
-    [sablono.util :as su]
     [taoensso.timbre :as log]))
 
 (def signup-ident [:component/id :signup])

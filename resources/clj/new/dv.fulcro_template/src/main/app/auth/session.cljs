@@ -14,7 +14,6 @@
   (sm/assoc-aliased env :error ""))
 
 (defn logout [env]
-  (log/info "logout env: " env)
   (let [env
         (-> env
           (clear)
@@ -39,7 +38,6 @@
   "Called on app boot and to validate logging in. See if we have a session from the backend."
   [env error-message chroute?]
   (let [success? (sm/alias-value env :session-valid?)]
-    (log/info "PROCESS SESSION RESULT , CHROUTE? " chroute?)
     (cond
       (and chroute? success?)
       (r/change-route! :root)
