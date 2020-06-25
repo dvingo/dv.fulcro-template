@@ -10,7 +10,7 @@
            com.cognitect/transit-cljs          {:mvn/version "0.8.264"}
            com.fulcrologic/semantic-ui-wrapper {:mvn/version "1.0.1"}
            com.fulcrologic/guardrails          {:mvn/version "0.0.12"}
-           dv/clj-utils                        {:mvn/version "2020-06-25"}
+           dv/clj-utils                        {:mvn/version "2020-06-25-1"}
            reagent                             {:mvn/version "1.0.0-alpha2"}
            org.clojure/core.async              {:mvn/version "1.2.603"}
            {{#node-server?}}
