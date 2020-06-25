@@ -69,8 +69,8 @@ clean:
 > rm builds/node-server/$(node-server-file)
 {{/node-server?}}
 
-start-dev-server:
-> clojure -A:dev
+be-repl:
+> clj -A:dev:test:guardrails
 
 start-prod-server:
 > pushd deploy

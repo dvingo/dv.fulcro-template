@@ -68,6 +68,12 @@ This uses mount to start web server.
 
 _note_ you do not need to specify any JVM parameters.
 
+You can start this on the command line via:
+
+```clojure
+make be-repl
+```
+
 ## Clojure webserver.
 
 The clojure webserver listens on port 8085 by default - this is specified in `src/main/config/defaults.edn`
