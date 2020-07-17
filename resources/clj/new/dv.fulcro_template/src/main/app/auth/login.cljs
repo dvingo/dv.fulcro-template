@@ -116,7 +116,7 @@
           (fu/hover-hand nil (str current-user ent/nbsp "Log out"))]
 
          [:<>
-          (r/link :signup
+          (r/link "Signup" :signup
             {:onClick
              (fn []
                (when open? (close-modal! this))

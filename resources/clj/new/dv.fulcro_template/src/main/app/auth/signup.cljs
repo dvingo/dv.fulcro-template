@@ -1,7 +1,6 @@
 (ns {{namespace}}.auth.signup
   (:require
     [clojure.string :as str]
-    [clojure.pprint :refer [pprint]]
     [com.fulcrologic.fulcro.algorithms.denormalize :as fdn]
     [com.fulcrologic.fulcro.algorithms.form-state :as fs]
     [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
