@@ -68,6 +68,8 @@
                                 TaskForm (merge (empty-form)
                                            {:ui/show-form-debug? false})))
    :componentDidMount (fn [this] (fmachine/begin! this ::form-machine TaskItemReturn))}
+  ;; todo, once you update the clj-utils lib version update this call
+  ;(let [{:keys [checked? disabled?]} (fu/validator-state this validator)]
   (let [{:keys [checked? disabled?]} (fu/validator-state validator props)]
     [:div
       (fu/notification {:ui/submit-state machine-state :ui/server-message message})
