@@ -2,6 +2,7 @@
   (:require
     [com.fulcrologic.fulcro.application :as app]
     [com.fulcrologic.fulcro.ui-state-machines :as uism]
+    [com.fulcrologic.fulcro.components :as c]
     [clojure.edn :as edn]
     [{{namespace}}.client.ui.root :as root]
     [{{namespace}}.client.application :refer [SPA]]
@@ -27,6 +28,7 @@
 (defn ^:export refresh []
   (log/info "Hot code Remount")
   (log/merge-config! log-config)
+  (c/refresh-dynamic-queries! SPA)
   (app/mount! SPA root/Root "app"))
 
 (defn ^:export init []

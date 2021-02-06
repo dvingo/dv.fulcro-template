@@ -17,6 +17,25 @@ Add a `new` alias to your user deps.edn file. For instructions see:
 
 https://github.com/seancorfield/dot-clojure
 
+
+
+Using Clojure CLI version 1.10.1.727 or later
+```bash
+# Frontend only app
+clj -X:new :template dv.fulcro-template :name my-username/my-project-name
+
+# Pass one or more options
+clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args '["+devcards" "+workspaces" "+test" "+node-server" "+server"]'
+
+# Or include them all:
+clj -X:new :template dv.fulcro-template my-username/my-project-name :args '["+all"]'
+
+# output to another directory name, and overwrite if it already exists:
+clj -X:new :template dv.fulcro-template my-username/my-project-name :output '"my-preferred-project-name"' :force true
+```
+
+Using Clojure CLI versions before 1.10.1.727:
+
 ```bash
 # Frontend only app
 clj -A:new dv.fulcro-template my-username/my-project-name
@@ -29,6 +48,12 @@ clj -A:new dv.fulcro-template my-username/my-project-name +all
 
 # output to another directory name:
 clj -A:new dv.fulcro-template my-username/my-project-name -o my-preferred-project-name
+```
+
+If you're working on the template itself, you can generate a project from the filesystem:
+
+```bash
+clj -X:new :template '"/home/my-user/dv.fulcro-template::dv.fulcro-template"' :name my-group/my-project
 ```
 
 ## Options
