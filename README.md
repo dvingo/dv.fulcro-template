@@ -90,15 +90,24 @@ The server has simple password auth using cryptohash-clj to hash passwords with 
 
 Build a deployable jar of this template:
 
-    clojure -A:jar
+    clojure -X:jar
 
 Install it locally:
 
-    clojure -A:install
+    clojure -M:install
 
 Deploy it to Clojars -- needs `CLOJARS_USERNAME` and `CLOJARS_PASSWORD` environment variables:
 
-    clojure -A:deploy
+    clojure -M:deploy
+
+Steps to deploy:
+
+Increment pom.xml version
+commit all changes, push to remote.
+```bash
+make
+```
+run deploy
 
 References:
 

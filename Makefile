@@ -12,4 +12,4 @@ endif
 
 jar:
 > clojure -Spom
-> clojure -A:jar
+> clojure -X:jar
