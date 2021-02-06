@@ -40,7 +40,7 @@
 ;; in a component use (r/route-segment :tasks) to ge the fulcro segment.
 
 (def routes
-  [["/" {:name :root :segment ["signup"]}]
+  [["/" {:name :root :segment ["tasks"]}]
    ["/tasks" {:name :tasks :segment ["tasks"]}]
    ["/signup" {:name :signup :segment ["signup"]}]])
 

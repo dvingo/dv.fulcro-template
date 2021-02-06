@@ -3,7 +3,7 @@
     [clojure.spec.alpha :as s]
     [clojure.string :as str]
     [com.fulcrologic.guardrails.core :refer [>defn >def | => ?]]
-    [dv.fulcro-util :as fu]
+    [dv.fulcro-util-common :as fu]
     #?(:clj [dv.crux-util :as cu])
     [taoensso.timbre :as log]))
 
