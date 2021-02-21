@@ -5,10 +5,14 @@
     [com.fulcrologic.fulcro.dom :as dom :refer [div]]
     [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
+    [dv.cljs-emotion-reagent :refer [global-style theme-provider]]
     [{{namespace}}.client.ui.task-item :refer [ui-task-list TaskList TaskForm ui-task-form]]
     [{{namespace}}.client.application :refer [SPA]]
     [{{namespace}}.client.router :as r]
     [{{namespace}}.client.ui.task-page :refer [TaskPage]]
+    [{{namespace}}.client.ui.styles.app-styles :as styles]
+    [{{namespace}}.client.ui.styles.global-styles :refer [global-styles]]
+    [{{namespace}}.client.ui.styles.style-themes :as themes]
     {{#server?}}
     [{{namespace}}.auth.login :refer [ui-login Login Session session-join valid-session?]]
     [{{namespace}}.auth.signup :refer [Signup]]{{/server?}}
@@ -62,8 +66,13 @@
 
 (def ui-page-container (c/factory PageContainer))
 
- ;; todo you can get rid of PageContainer and just put it here and remove one level of nesting.
-(defsc Root [_ {:root/keys [page-container]}]
-  {:query         [{:root/page-container (c/get-query PageContainer)}]
-   :initial-state (fn [_] {:root/page-container (c/get-initial-state PageContainer {})})}
-  (ui-page-container page-container))
+(defsc Root [this {:root/keys [page-container style-theme]}]
+  {:query         [{:root/page-container (c/get-query PageContainer)}
+                   :root/style-theme]
+   :initial-state (fn [_] {:root/page-container (c/get-initial-state PageContainer {})
+                           :root/style-theme themes/light-theme})}
+  (theme-provider
+    {:theme style-theme}
+    (global-style (global-styles style-theme))
+    [:button {:on-click #(styles/toggle-app-styles! this style-theme)} "Switch Theme"]
+    (ui-page-container page-container)))

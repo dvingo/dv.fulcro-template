@@ -4,7 +4,7 @@
            org.clojure/spec.alpha              {:mvn/version "0.2.194"}
            com.taoensso/timbre                 {:mvn/version "5.1.0"}
            com.taoensso/tufte                  {:mvn/version "2.2.0"}
-           com.fulcrologic/fulcro              {:mvn/version "3.4.15"
+           com.fulcrologic/fulcro              {:mvn/version "3.4.17"
                                                 :exclusions  [com.cognitect/transit-cljs
                                                               com.cognitect/transit-js]}
            com.cognitect/transit-cljs          {:mvn/version "0.8.264"}
@@ -53,7 +53,6 @@
                        :extra-deps  {org.clojure/clojurescript           {:mvn/version "1.10.773"}
                                      org.clojure/test.check              {:mvn/version "1.0.0"}
                                      thheller/shadow-cljs                {:mvn/version "2.11.17"}
-                                     com.fulcrologic/semantic-ui-wrapper {:mvn/version "1.0.0"}
                                      {{#server?}}
                                      ;; Logging for pedestal, not sure if exclusion is necessary.
                                      ch.qos.logback/logback-classic      {:mvn/version "1.2.3"

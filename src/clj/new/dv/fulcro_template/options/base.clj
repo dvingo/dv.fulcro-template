@@ -25,6 +25,9 @@
      ["src/main/{{nested-dirs}}/client/ui/task_item.cljs" (helpers/render "src/main/app/client/ui/task_item.cljs" data)]
      ["src/main/{{nested-dirs}}/client/ui/task_page.cljs" (helpers/render "src/main/app/client/ui/task_page.cljs" data)]
      ["src/main/{{nested-dirs}}/client/ui/root.cljs" (helpers/render "src/main/app/client/ui/root.cljs" data)]
+     ["src/main/{{nested-dirs}}/client/ui/styles/app_styles.cljs" (helpers/render "src/main/app/client/ui/styles/app_styles.cljs" data)]
+     ["src/main/{{nested-dirs}}/client/ui/styles/global_styles.cljs" (helpers/render "src/main/app/client/ui/styles/global_styles.cljs" data)]
+     ["src/main/{{nested-dirs}}/client/ui/styles/style_themes.cljs" (helpers/render "src/main/app/client/ui/styles/style_themes.cljs" data)]
      ["src/main/config/fe-config.edn" (helpers/render "src/main/config/fe-config.edn" data)]
 
      ;; Data model
