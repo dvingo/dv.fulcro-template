@@ -22,11 +22,13 @@
    ;; config
    ["src/main/config/defaults.edn" (helpers/render "src/main/config/defaults.edn" data)]
    ["src/main/config/dev.edn" (helpers/render "src/main/config/dev.edn" data)]
+   ["src/main/config/test.edn" (helpers/render "src/main/config/test.edn" data)]
    ["src/main/config/prod.edn" (helpers/render "src/main/config/prod.edn" data)]
 
    ;; server code
    ["src/main/{{nested-dirs}}/server/config.clj" (helpers/render "src/main/app/server/config.clj" data)]
    ["src/main/{{nested-dirs}}/server/db_layer.clj" (helpers/render "src/main/app/server/db_layer.clj" data)]
+   ["src/main/{{nested-dirs}}/server/crux_node.clj" (helpers/render "src/main/app/server/crux_node.clj" data)]
    ["src/main/{{nested-dirs}}/server/pathom_parser.clj" (helpers/render "src/main/app/server/pathom_parser.clj" data)]
    ["src/main/{{nested-dirs}}/server/task_resolvers.clj" (helpers/render "src/main/app/server/task_resolvers.clj" data)]
    ["src/main/{{nested-dirs}}/server/pathom_playground.clj" (helpers/render "src/main/app/server/pathom_playground.clj" data)]

@@ -1,0 +1,11 @@
+{:env
+ :test
+
+ :io.pedestal.http/config
+ {:io.pedestal.http/port 8086}
+
+ :{{namespace}}.server.pathom/config
+ {:connect-viz?    false
+  :trace?          false
+  :index-explorer? false
+  :log-responses   false}}

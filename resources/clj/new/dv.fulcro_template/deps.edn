@@ -29,8 +29,11 @@
             ;; Crux
             juxt/crux-core                      {:mvn/version "21.01-1.14.0-beta"}
             juxt/crux-rocksdb                   {:mvn/version "21.01-1.14.0-beta"}
+            juxt/crux-jdbc                      {:mvn/version "21.01-1.14.0-beta"}
             juxt/crux-metrics                   {:mvn/version "21.01-1.14.0-alpha"}
             ;juxt/crux-http-server               {:mvn/version "20.05-1.8.4-alpha"}
+            org.postgresql/postgresql           {:mvn/version  "42.2.18"}
+
             ;; Pedestal
             io.pedestal/pedestal.service        {:mvn/version "0.5.8"}
             io.pedestal/pedestal.jetty          {:mvn/version "0.5.8"}

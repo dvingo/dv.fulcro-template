@@ -27,9 +27,7 @@
     (or
       (validity-check
         (not current-user) "You must be logged in to create a task."
-        (not (s/valid? ::dm/task props)) "Task is invalid"
-        (dl/get-task-by-description user-tasks description)
-        "A task with that description already exists.")
+        (not (s/valid? ::dm/task props)) "Task is invalid")
 
       (let [task (dm/make-db-task props)
             new-user (dl/read-merge-user (fu/conj-vec current-user :user/tasks id))]

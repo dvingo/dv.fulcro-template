@@ -5,7 +5,6 @@
     [clojure.string :as string]
     [com.fulcrologic.fulcro.server.api-middleware :refer [handle-api-request]]
     [com.fulcrologic.guardrails.core :refer [>defn => | ?]]
-    [dv.crux-node :refer [crux-node]]
     [dv.crux-ring-session-store :refer [crux-session-store]]
     [dv.fulcro-util :as fu]
     [hiccup.page :refer [html5]]
@@ -21,6 +20,7 @@
     [reitit.http.interceptors.parameters :as parameters]
     [reitit.pedestal :as rpedestal]
     [{{namespace}}.server.config :refer [config]]
+    [{{namespace}}.server.crux-node :refer [crux-node]]
     [{{namespace}}.server.pathom-parser :refer [parser]]
     [taoensso.timbre :as log]))
 
@@ -165,16 +165,21 @@
      :font-src    (string/join " " (list* "data:" font-domains))
      :style-src   (string/join " " (list* "'unsafe-inline'" style-domains))}))
 
+
+;; 30 24-hour periods
+(def cookie-age (* 60 60 24 30))
+
 (defn service [config]
   (let [{:keys [dev? disable-csrf?]} (::config config)]
     {:env                  :prod
      ::http/routes         []
      ::http/resource-path  "/public"
      ::http/enable-session {:store        (crux-session-store crux-node)
-                            :cookie-attrs {:secure    (not dev?)
-                                           :same-site :strict
-                                           ;; expires in two weeks
-                                           :max-age   1209600}}
+                            :cookie-attrs
+                                          (if dev? {:http-only true}
+                                                   {:http-only true
+                                                    :max-age   cookie-age
+                                                    :secure    true})}
      ::http/enable-csrf    (if disable-csrf? nil {})
      ::http/type           :jetty
      ::http/secure-headers {:content-security-policy-settings (make-csp-policy config)}
