@@ -41,7 +41,9 @@
 
 (def routes
   [["/" {:name :root :segment ["tasks"]}]
-   ["/tasks" {:name :tasks :segment ["tasks"]}]
+   ["/tasks" {:segment ["tasks"]}
+    ["" {:name :tasks :segment [(fn [_] (-> (js/Date.) .toISOString (.substr 0 10)))]}]
+    ["/:date" {:name :task-date :segment [:date]}]]
    ["/signup" {:name :signup :segment ["signup"]}]])
 
 ;; example of possible redirect logic setup:
@@ -69,6 +71,12 @@
             (remove empty?)
             vec)]
     (if (seq s) s [])))
+
+(defn construct-fulcro-segments [match-data]
+  (let [segment (-> match-data :data :segment)]
+    (mapv
+      (fn [s] (cond-> s (fn? s) (apply [match-data])))
+      segment)))
 
 (def current-fulcro-route* (atom []))
 (defn current-fulcro-route [] @current-fulcro-route*)
@@ -105,11 +113,11 @@
                   (vswap! redirect-loop-count inc)
                   (js/setTimeout #(rfe/replace-state route params))))))
 
-        (let [segment         (-> m :data :segment)
-              fulcro-segments (cond-> segment (fn? segment) (apply [m]))
+        (let [fulcro-segments (construct-fulcro-segments m)
               params          (:path-params m)
               ;; fill in any dynamic path segments with their values
-              target-segment  (mapv (fn [part] (cond->> part (keyword? part) (get params))) fulcro-segments)]
+              target-segment  (mapv (fn [part] (cond->> part (keyword? part) (get params)))
+                                fulcro-segments)]
           (log/info "Invoking Fulcro change route with " target-segment)
           (reset! current-fulcro-route* target-segment)
           (dr/change-route! SPA target-segment))))))
