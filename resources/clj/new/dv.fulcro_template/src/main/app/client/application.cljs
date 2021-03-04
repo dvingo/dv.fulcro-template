@@ -21,11 +21,18 @@
     js/fulcro_network_csrf_token
     "TOKEN-NOT-IN-HTML!"))
 
+;; Optionally add custom transit codecs.
+
+(def transit-readers nil)
+(def transit-writers nil)
+
 (defn request-middleware []
   ;; The CSRF token is embedded via service.clj
   (->
     (net/wrap-csrf-token (get-token))
-    (net/wrap-fulcro-request)
+    (if transit-writers
+      (net/wrap-fulcro-request transit-writers)
+      (net/wrap-fulcro-request))
     (wrap-accept-transit)))
 
 ;; To view the map response as a map of data uncomment this:
@@ -37,7 +44,9 @@
       out)))
 
 (defn response-middleware []
-  (cond-> (net/wrap-fulcro-response)
+  (cond-> (if transit-readers
+            (net/wrap-fulcro-response identity transit-readers)
+            (net/wrap-fulcro-response))
     LOG-RESPONSES resp-logger))
 
 (defn api-remote []
