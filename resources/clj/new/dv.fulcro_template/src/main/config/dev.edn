@@ -1,4 +1,5 @@
-{:taoensso.timbre/logging-config
+{:env :dev
+ :taoensso.timbre/logging-config
    {:level        :debug
     :ns-blacklist ["shadow.cljs.devtools.server.worker.impl"]}
 

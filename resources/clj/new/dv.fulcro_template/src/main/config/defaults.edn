@@ -1,4 +1,5 @@
-{:io.pedestal.http/config
+{:env :prod
+ :io.pedestal.http/config
  {:env                              :prod
   :io.pedestal.http/port            8085
   :io.pedestal.http/allowed-origins ["localhost"]}
@@ -7,6 +8,13 @@
  {:level        :info
   :ns-whitelist []
   :ns-blacklist []}
+
+ :{{namespace}}.server.crux-node/config
+ {:db-spec {:dbname   "crux-db"
+            :host     "localhost"
+            :port     5432
+            :user     "crux-user"
+            :password "crux-password"}}
 
  :{{namespace}}.server.pathom/config
  {:connect-viz? false}

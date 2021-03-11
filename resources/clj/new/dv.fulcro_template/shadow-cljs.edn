@@ -24,7 +24,8 @@
                                                  ;; if using the electron app:
                                                  ;com.fulcrologic.fulcro.inspect.websocket-preload
 
-                                                 {{namespace}}.client.development-preload]
+                                                 {{namespace}}.client.development-preload
+                                                 com.fulcrologic.fulcro.inspect.dom-picker-preload]
                                     {{^server?}}
                                     :http-port 8021
                                     :http-resource-root "public"

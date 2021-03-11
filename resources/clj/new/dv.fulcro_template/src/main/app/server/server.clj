@@ -3,9 +3,9 @@
     [clojure.pprint :refer [pprint]]
     [io.pedestal.http :as http]
     [mount.core :refer [defstate]]
-    dv.crux-node
     [{{namespace}}.server.config :refer [config]]
     [{{namespace}}.server.service :as service]
+    [{{namespace}}.server.crux-node]
     [taoensso.timbre :as log]))
 
 (defstate http-server

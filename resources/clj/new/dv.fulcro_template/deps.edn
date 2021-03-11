@@ -4,7 +4,7 @@
            org.clojure/spec.alpha              {:mvn/version "0.2.194"}
            com.taoensso/timbre                 {:mvn/version "5.1.0"}
            com.taoensso/tufte                  {:mvn/version "2.2.0"}
-           com.fulcrologic/fulcro              {:mvn/version "3.4.15"
+           com.fulcrologic/fulcro              {:mvn/version "3.4.17"
                                                 :exclusions  [com.cognitect/transit-cljs
                                                               com.cognitect/transit-js]}
            com.cognitect/transit-cljs          {:mvn/version "0.8.264"}
@@ -29,8 +29,11 @@
             ;; Crux
             juxt/crux-core                      {:mvn/version "21.01-1.14.0-beta"}
             juxt/crux-rocksdb                   {:mvn/version "21.01-1.14.0-beta"}
+            juxt/crux-jdbc                      {:mvn/version "21.01-1.14.0-beta"}
             juxt/crux-metrics                   {:mvn/version "21.01-1.14.0-alpha"}
             ;juxt/crux-http-server               {:mvn/version "20.05-1.8.4-alpha"}
+            org.postgresql/postgresql           {:mvn/version  "42.2.18"}
+
             ;; Pedestal
             io.pedestal/pedestal.service        {:mvn/version "0.5.8"}
             io.pedestal/pedestal.jetty          {:mvn/version "0.5.8"}
@@ -50,7 +53,6 @@
                        :extra-deps  {org.clojure/clojurescript           {:mvn/version "1.10.773"}
                                      org.clojure/test.check              {:mvn/version "1.0.0"}
                                      thheller/shadow-cljs                {:mvn/version "2.11.17"}
-                                     com.fulcrologic/semantic-ui-wrapper {:mvn/version "1.0.0"}
                                      {{#server?}}
                                      ;; Logging for pedestal, not sure if exclusion is necessary.
                                      ch.qos.logback/logback-classic      {:mvn/version "1.2.3"

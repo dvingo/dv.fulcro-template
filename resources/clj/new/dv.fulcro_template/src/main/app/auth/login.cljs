@@ -81,7 +81,7 @@
    :initial-state      {:user/email "" :ui/error ""}
    :ident              (fn [] [:component/id :login])
    :componentDidMount  (fn [this]
-                         (events/listen js/document (.-MOUSEUP EventType)
+                         (events/listen js/document (.-MOUSEUP ^js EventType)
                            (fn [e]
                              ;(log/info "GOT MOUSE UP document" e)
                              (when (:ui/open? (comp/props this))
@@ -89,7 +89,7 @@
                                (close-modal! this))))
 
                          (when-let [dom-node (g/get this "el")]
-                           (events/listen dom-node (.-MOUSEUP EventType) (fu/stop-propagation)
+                           (events/listen dom-node (.-MOUSEUP ^js EventType) (fu/stop-propagation)
                              ; (fn [e] (log/info "GOT MOUSE UP login " e) (.stopPropagation e))
                              )))
 

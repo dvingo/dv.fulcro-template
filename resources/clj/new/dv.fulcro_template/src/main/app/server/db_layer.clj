@@ -15,9 +15,6 @@
 (def insert-task (partial cu/insert-entity :task/id))
 (def read-merge-task (partial cu/read-merge-entity :task/id))
 
-(def get-task-by-description (cu/mk-get-id-from-coll :task/id :task/description))
-(comment (get-task-by-description [] "Drink 1 liter of water"))
-
 (def read-merge-user (partial cu/read-merge-entity :user/id))
 ;; does db update
 (def merge-user!
