@@ -28,10 +28,10 @@ clj -X:new :template dv.fulcro-template :name my-username/my-project-name
 clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args '["+devcards" "+workspaces" "+test" "+node-server" "+server"]'
 
 # Or include them all:
-clj -X:new :template dv.fulcro-template my-username/my-project-name :args '["+all"]'
+clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args '["+all"]'
 
 # output to another directory name, and overwrite if it already exists:
-clj -X:new :template dv.fulcro-template my-username/my-project-name :output '"my-preferred-project-name"' :force true
+clj -X:new :template dv.fulcro-template :name my-username/my-project-name :output '"my-preferred-project-name"' :force true
 ```
 
 Using Clojure CLI versions before 1.10.1.727:
