@@ -11,10 +11,10 @@
     [com.fulcrologic.fulcro.ui-state-machines :as sm :refer [defstatemachine]]
     [goog.object :as g]
     [goog.events :as events :refer [EventType]]
+    [dv.fulcro-reitit :as fr]
     [dv.fulcro-util :as fu]
     [dv.cljs-emotion :refer [defstyled]]
     [{{namespace}}.auth.session :as session]
-    [{{namespace}}.client.router :as r]
     [taoensso.timbre :as log]))
 
 (defsc Session
@@ -60,7 +60,7 @@
         (dom/p "Don't have an account?")
         (dom/a {:onClick (fn []
                            (sm/trigger! this ::session/session :event/toggle-modal {})
-                           (r/change-route! :signup))}
+                           (fr/change-route! this :signup))}
           "Please sign up!")))))
 
 (def session-join {[:component/id :session] (comp/get-query Session)})
@@ -116,11 +116,13 @@
           (fu/hover-hand nil (str current-user ent/nbsp "Log out"))]
 
          [:<>
-          (r/link "Signup" :signup
-            {:onClick
-             (fn []
-               (when open? (close-modal! this))
-               (r/change-route! :signup))})
+          [:a.item
+           {:key      "signup"
+            :on-click (fu/prevent-default (fn []
+                                            (when open? (close-modal! this))
+                                            (fr/change-route! this :signup)))
+            :href     (if (fu/on-server?) "signup" (fr/route-href :signup))}
+           "Signup"]
 
           [:div {:className "item" :key "login" :onClick #(toggle-modal! this)}
            (fu/hover-hand #js{:key "login-label"} "Login")

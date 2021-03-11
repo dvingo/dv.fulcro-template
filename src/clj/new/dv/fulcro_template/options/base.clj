@@ -21,7 +21,6 @@
      ["src/main/{{nested-dirs}}/client/client_entry.cljs" (helpers/render "src/main/app/client/client_entry.cljs" data)]
      ["src/main/{{nested-dirs}}/client/prn_debug.cljs" (helpers/render "src/main/app/client/prn_debug.cljs" data)]
      ["src/main/{{nested-dirs}}/client/development_preload.cljs" (helpers/render "src/main/app/client/development_preload.cljs" data)]
-     ["src/main/{{nested-dirs}}/client/router.cljs" (helpers/render "src/main/app/client/router.cljs" data)]
      ["src/main/{{nested-dirs}}/client/ui/task_item.cljs" (helpers/render "src/main/app/client/ui/task_item.cljs" data)]
      ["src/main/{{nested-dirs}}/client/ui/task_page.cljs" (helpers/render "src/main/app/client/ui/task_page.cljs" data)]
      ["src/main/{{nested-dirs}}/client/ui/root.cljs" (helpers/render "src/main/app/client/ui/root.cljs" data)]
@@ -37,4 +36,3 @@
     (when-not (:server? data)
       [["resources/public/index.html" (helpers/render "resources/public/index.html" data)]
        ["resources/public/favicon.ico" (helpers/render "resources/public/favicon.ico" data)]])))
-

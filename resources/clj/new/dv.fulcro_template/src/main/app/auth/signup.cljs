@@ -10,8 +10,8 @@
     [com.fulcrologic.fulcro.ui-state-machines :as uism]
     [com.fulcrologic.guardrails.core :refer [>defn => | ?]]
     [dv.fulcro-util :as fu]
+    [dv.fulcro-reitit :as fr]
     [{{namespace}}.auth.session :as session]
-    [{{namespace}}.client.router :as r]
     [{{namespace}}.auth.login :refer [session-join Session get-session]]
     [taoensso.timbre :as log]))
 
@@ -48,7 +48,7 @@
       (log/info "Signup success result: " result)
       (df/remove-load-marker! app ::signup)
       (when (:session/valid? session)
-        (r/change-route! :tasks)
+        (fr/change-route! app :tasks)
         (uism/trigger! app ::session/session :event/signup-success))))
 
   (error-action [{:keys [app]}]
@@ -90,7 +90,8 @@
                            :account/password-again ""}))
    :form-fields       #{:account/email :account/password :account/password-again}
    :ident             (fn [] signup-ident)
-   :route-segment     (r/route-segment :signup)
+   :route-segment     ["signup"]
+   ::fr/route         ["/signup" {:name :signup :segment ["signup"]}]
    :componentDidMount (fn [this] (comp/transact! this [(clear-signup-form)]))}
   (let [server-err (:session/server-error-msg (get-session props))
         form-valid? (= :valid (validator props))

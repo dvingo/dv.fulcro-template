@@ -6,12 +6,12 @@
     [clojure.edn :as edn]
     [{{namespace}}.client.ui.root :as root]
     [{{namespace}}.client.application :refer [SPA]]
-    [{{namespace}}.client.router :as router]
     {{#server?}}
     [{{namespace}}.auth.login :refer [Login Session]]
     [{{namespace}}.auth.session :as session]
     {{/server?}}
     [shadow.resource :as rc]
+    [dv.fulcro-reitit :as fr]
     [taoensso.timbre :as log]))
 
 ;; set logging lvl using goog-define, see shadow-cljs.edn
@@ -35,7 +35,7 @@
   (log/merge-config! log-config)
   (log/info "Application starting.")
   (app/set-root! SPA root/Root {:initialize-state? true})
-  (router/init! SPA)
+  (fr/start-router! SPA)
   {{#server?}}
   (log/info "Starting session machine.")
   (uism/begin! SPA session/session-machine ::session/session

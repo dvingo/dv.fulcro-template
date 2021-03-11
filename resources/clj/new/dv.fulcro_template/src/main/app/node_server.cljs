@@ -20,8 +20,7 @@
     [httpurr.client.node :as node]
     [promesa.core :as p]
     [reitit.core :as r]
-    [reitit.frontend :as rf]
-    [{{namespace}}.client.router :refer [router routes change-route!]]
+    [dv.fulcro-reitit :as fr]
     [{{namespace}}.client.ui.root :as root]
     [taoensso.timbre :as log]))
 
@@ -114,11 +113,13 @@
   (js/console.log "cookie : " (.. req -headers -cookie))
 
   (let [url  (.-url req)
-        m    (r/match-by-path router url)
         cookie (.. req -headers -cookie)
-        ;; put your start data query here
+        ;; todo put your start data query here something like .. (c/get-query root/Root {})
         query [{:all-people '[*]}]
-        app (init-app root/Root)]
+        app (init-app root/Root)
+        router (fr/router-state app :reitit-router)
+        routes (fr/router-state app :routes-by-name)
+        m    (r/match-by-path router url)]
     (p/then
       (call-api {:cookie cookie} query)
       (fn [resp]

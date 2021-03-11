@@ -4,6 +4,7 @@
     [cryptohash-clj.impl.argon2 :refer [chash verify]]
     [com.fulcrologic.guardrails.core :refer [>defn => | ?]]
     [com.wsscode.pathom.connect :as pc :refer [defresolver defmutation]]
+    [{{namespace}}.server.crux-node :refer [crux-node]]
     [dv.crux-util :as cu]
     [dv.fulcro-util :as fu]
     [taoensso.timbre :as log]))
@@ -22,39 +23,29 @@
   {:user/id       id
    :user/email    email
    :user/password (hash-password password)
-   :user/tasks    []
-   :user/habits   []})
+   :user/tasks    []})
 
 (defn insert-user [id email password]
-  (cu/insert-entity :user/id (make-user id email password)))
+  (cu/insert-entity crux-node :user/id (make-user id email password)))
 
 (defn insert-user-map [m]
-  (cu/insert-entity :user/id m))
+  (cu/insert-entity crux-node :user/id m))
 
 (defn fresh-user
   [email password]
-   (make-user (fu/uuid) email password))
+  (make-user (fu/uuid) email password))
 
 (defn get-user-by-email [username]
-  (cu/entity-with-prop [:user/email username]))
-
-(comment (get-user-by-email "abc@abc.com"))
+  (cu/entity-with-prop crux-node [:user/email username]))
 
 (defn get-user-by-id [crux-node id]
   (cu/entity crux-node id))
 
-;(defn get-all-users []
-;  (cu/q {:find ['u]
-;            :where [['u :user/email 'any]]}))
-
 (defn get-all-users []
   (->>
-    (cu/crux-select
-      [:user/id :user/email #_:user/tasks #_:user/habits])
-    (map #(cu/domain-entity (:user/id %)))
-    #_(map #(vector (% :user/email) (cu/get-timestamps (% :user/id))))
-    (group-by :user/email)
-    #_(sort-by :db/created-at)))
+    (cu/crux-select crux-node [:user/id :user/email])
+    (map #(cu/domain-entity crux-node (:user/id %)))
+    (group-by :user/email)))
 
 (defn get-current-user
   "Reads username (email) from the ring session"
@@ -63,9 +54,9 @@
   (when-let [session (:session request)]
     (when (:session/valid? session)
       (if-let [email (:user/name session)]
-        (do (log/info "HAVE A USER: " email)
+        (do (log/info "Have a user: " email)
             (get-user-by-email email))
-        (do (log/info "no user")
+        (do (log/info "No user")
             nil)))))
 
 (def user-keys [:user/email :user/id])
@@ -82,7 +73,7 @@
 
 (pc/defresolver all-users-resolver [env _]
   {::pc/output [{:all-users [:user/id]}]}
-  {:all-users (map (comp cu/domain-entity :user/id)
-                (cu/crux-select [:user/id]))})
+  {:all-users (map (comp #(cu/domain-entity crux-node %) :user/id)
+                (cu/crux-select crux-node [:user/id]))})
 
 (def resolvers [user-resolver current-user-res all-users-resolver])

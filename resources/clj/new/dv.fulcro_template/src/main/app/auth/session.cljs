@@ -5,9 +5,9 @@
     [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
     [com.fulcrologic.guardrails.core :refer [>defn => | ?]]
+    [dv.fulcro-reitit :as fr]
     [dv.fulcro-util :as fu]
     [{{namespace}}.client.application :refer [SPA]]
-    [{{namespace}}.client.router :as r]
     [taoensso.timbre :as log]))
 
 (defn clear [env]
@@ -20,7 +20,7 @@
           (sm/assoc-aliased :username "" :session-valid? false :current-user "")
           (sm/trigger-remote-mutation :actor/login-form `logout {})
           (sm/activate :state/logged-out))]
-    (r/change-route! :root)
+    (fr/change-route! (::sm/app env) :root)
     env))
 
 (defn login [{::sm/keys [event-data] :as env}]
@@ -40,9 +40,9 @@
   (let [success? (sm/alias-value env :session-valid?)]
     (cond
       (and chroute? success?)
-      (r/change-route! :root)
+      (fr/change-route! (::sm/app env) :default)
       (not success?)
-      (r/change-route! :signup))
+      (fr/change-route! (::sm/app env) :signup))
     (cond-> (clear env)
       success? (->
                  (sm/assoc-aliased :modal-open? false)

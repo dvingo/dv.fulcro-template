@@ -5,10 +5,10 @@
     [com.fulcrologic.fulcro.dom :as dom :refer [div]]
     [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
+    [dv.fulcro-reitit :as fr]
     [dv.cljs-emotion-reagent :refer [global-style theme-provider]]
     [{{namespace}}.client.ui.task-item :refer [ui-task-list TaskList TaskForm ui-task-form]]
     [{{namespace}}.client.application :refer [SPA]]
-    [{{namespace}}.client.router :as r]
     [{{namespace}}.client.ui.task-page :refer [TaskPage]]
     [{{namespace}}.client.ui.styles.app-styles :as styles]
     [{{namespace}}.client.ui.styles.global-styles :refer [global-styles]]
@@ -28,7 +28,8 @@
  (defn menu [{:keys [session? login]}]
    (div :.ui.secondary.pointing.menu
      (conj
-       (mapv r/link (if session? [:root :tasks] [:root]))
+       (mapv (fn [p] [:a.item {:href (fr/route-href p)} (name p)])
+         (if session? [:root :tasks] [:root]))
        (ui-login login))))
 
   (defsc PageContainer [this {:root/keys [router login] :as props}]
@@ -41,7 +42,7 @@
                              :root/login              (c/get-initial-state Login {})
                              :root/signup             (c/get-initial-state Signup {})
                              [:component/id :session] (c/get-initial-state Session {})})}
-    (let [current-tab (r/current-route this)
+    (let [current-tab (fr/current-route this)
           session? (valid-session? props)]
       [:div.ui.container
         (menu {:session? session? :login login})
@@ -60,9 +61,12 @@
    :ident         (fn [] [:component/id :page-container])
    :initial-state (fn [_] {:root/router (c/get-initial-state TopRouter {})})}
   [:div.ui.container
-   [:div.ui.secondary.pointing.menu (map r/link [:root])]
+   [:div.ui.secondary.pointing.menu
+    (map (fn [p] [:a.item {:href (fr/route-href p)} (name p)]) [:root])]
    (ui-top-router router)])
 {{/server?}}
+
+(fr/register-fulcro-router! SPA TopRouter)
 
 (def ui-page-container (c/factory PageContainer))
 

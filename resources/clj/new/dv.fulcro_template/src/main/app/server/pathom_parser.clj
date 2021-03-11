@@ -25,8 +25,6 @@
        :index-explorer?    index-explorer?
        :enable-pathom-viz? connect-viz?
        :env-additions      (fn [env]
-                             ;(log/info "in pathom current user: " (some-> (users-dl/get-current-user env) :user/id))
                              {:crux-node    crux-node
                               :config       config
-                              ;:auth         auth
-                              #_#_:current-user (users-dl/get-current-user env)})})))
+                              :current-user (user/get-current-user env)})})))

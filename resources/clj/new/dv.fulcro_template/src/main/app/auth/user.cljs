@@ -10,8 +10,7 @@
 (defsc User [this {:user/keys [id email  ] :keys [db/created-at]}]
   {:query [:user/id :user/email
            :db/created-at
-           {:user/tasks (comp/get-query TaskItem)}
-           {:user/habits (comp/get-query HabitItem)}]
+           {:user/tasks (comp/get-query TaskItem)}]
    :ident :user/id}
   (dom/div nil
     (dom/h2 "user")
