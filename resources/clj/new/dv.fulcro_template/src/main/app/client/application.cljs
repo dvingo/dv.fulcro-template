@@ -30,9 +30,7 @@
   ;; The CSRF token is embedded via service.clj
   (->
     (net/wrap-csrf-token (get-token))
-    (if transit-writers
-      (net/wrap-fulcro-request transit-writers)
-      (net/wrap-fulcro-request))
+    (net/wrap-fulcro-request transit-writers)
     (wrap-accept-transit)))
 
 ;; To view the map response as a map of data uncomment this:
@@ -44,9 +42,7 @@
       out)))
 
 (defn response-middleware []
-  (cond-> (if transit-readers
-            (net/wrap-fulcro-response identity transit-readers)
-            (net/wrap-fulcro-response))
+  (cond-> (net/wrap-fulcro-response identity transit-readers)
     LOG-RESPONSES resp-logger))
 
 (defn api-remote []

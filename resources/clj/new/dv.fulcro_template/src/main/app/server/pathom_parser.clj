@@ -2,6 +2,8 @@
   (:require
     [com.wsscode.pathom.connect :as pc]
     [dv.pathom :refer [build-parser]]
+    [mount.core :refer [defstate]]
+    [taoensso.timbre :as log]
     [{{namespace}}.server.task-resolvers :as task]
     [{{namespace}}.auth.session :as session]
     [{{namespace}}.auth.user :as user]
