@@ -29,7 +29,7 @@
    (div :.ui.secondary.pointing.menu
      (conj
        (mapv (fn [p] [:a.item {:href (fr/route-href p)} (name p)])
-         (if session? [:root :tasks] [:root]))
+         (if session? [:default :tasks] [:default]))
        (ui-login login))))
 
   (defsc PageContainer [this {:root/keys [router login] :as props}]
@@ -62,7 +62,7 @@
    :initial-state (fn [_] {:root/router (c/get-initial-state TopRouter {})})}
   [:div.ui.container
    [:div.ui.secondary.pointing.menu
-    (map (fn [p] [:a.item {:href (fr/route-href p)} (name p)]) [:root])]
+    [:a.item {:href (fr/route-href :default)} "Home"]]
    (ui-top-router router)])
 {{/server?}}
 

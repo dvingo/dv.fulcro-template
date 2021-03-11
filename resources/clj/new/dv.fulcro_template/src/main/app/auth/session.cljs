@@ -20,7 +20,7 @@
           (sm/assoc-aliased :username "" :session-valid? false :current-user "")
           (sm/trigger-remote-mutation :actor/login-form `logout {})
           (sm/activate :state/logged-out))]
-    (fr/change-route! (::sm/app env) :root)
+    (fr/change-route! (::sm/app env) :default)
     env))
 
 (defn login [{::sm/keys [event-data] :as env}]
