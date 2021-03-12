@@ -26,11 +26,11 @@
  (def ui-top-router (c/factory TopRouter))
 
  (defn menu [{:keys [session? login]}]
-   (div :.ui.secondary.pointing.menu
-     (conj
-       (mapv (fn [p] [:a.item {:href (fr/route-href p)} (name p)])
-         (if session? [:default :tasks] [:default]))
-       (ui-login login))))
+   [:div.ui.secondary.pointing.menu
+    (concat
+      (map (fn [p] ^{:key (name p)} [:a.item {:href (fr/route-href p)} (name p)])
+        (if session? [:default :tasks] [:default]))
+      [(ui-login login)])])
 
   (defsc PageContainer [this {:root/keys [router login] :as props}]
     {:query         [{:root/router (c/get-query TopRouter)}

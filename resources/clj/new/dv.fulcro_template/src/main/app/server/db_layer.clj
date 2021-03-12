@@ -12,11 +12,18 @@
 (defn get-task [crux-node id] (select-keys (cu/domain-entity crux-node id) dm/db-task-keys))
 (defn get-all-tasks [crux-node]
   (cu/crux-select crux-node dm/all-task-keys))
-(def insert-task (partial cu/insert-entity :task/id))
-(def read-merge-task (partial cu/read-merge-entity :task/id))
 
-(def read-merge-user (partial cu/read-merge-entity :user/id))
+(defn insert-task [crux-node t] (cu/insert-entity crux-node :task/id t))
+(defn read-merge-task
+  [crux-node task-data]
+  (cu/read-merge-entity crux-node :task/id task-data))
+
+(defn read-merge-user
+  [crux-node user-data]
+  (cu/read-merge-entity crux-node :user/id user-data))
+
 ;; does db update
-(def merge-user!
+(defn merge-user!
   "(merge-user! {:new user data})"
-  (partial cu/merge-domain-entity :user/id))
+  [crux-node user-data]
+  (cu/merge-domain-entity crux-node :user/id user-data))

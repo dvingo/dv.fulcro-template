@@ -1,27 +1,35 @@
 (ns {{namespace}}.client.ui.task-item
   (:require
-    [clojure.string :as str]
     [clojure.spec.alpha :as s]
     [com.fulcrologic.fulcro.algorithms.form-state :as fs]
-    [com.fulcrologic.fulcro.algorithms.merge :as merge]
     [com.fulcrologic.fulcro.components :as c :refer [defsc]]
-    [com.fulcrologic.fulcro.dom :as dom]
     [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
+    [dv.cljs-emotion-reagent :refer [defstyled]]
     [dv.fulcro-util :as fu]
     [dv.fulcro-entity-state-machine :as fmachine]
     [{{namespace}}.data-model.task :as dm]
     [taoensso.timbre :as log]))
 
+(defstyled flex :div
+  {:display "flex"
+   :align-items "center"
+   "> * + *" {:margin-left "0.5em"}})
+
+(defstyled bold :div
+  {:font-weight "700"})
+
 (defsc TaskItem
-  [this {:task/keys [id description] :as props}]
-  {:query (fn [_] dm/all-task-keys)
+  [this {:task/keys [id description] :ui/keys [show-debug?]}]
+  {:query [:task/id :task/description :ui/show-debug?]
    :ident :task/id}
-  [:div
-   [:h4 "Task Item"]
-   [:div "id: " (pr-str id)]
-   [:div "descr: " (pr-str description)]
-   (fu/props-data-debug this true)])
+  [:div.ui.segment
+   [:h4.ui.header "Task Item"]
+   [flex [bold "ID: "] [:span (pr-str id)]]
+   [flex {:style {:margin-bottom "1em"}} [bold "Description: "] [:span (pr-str description)]]
+   [:button.ui.button.mini {:on-click #(m/toggle!! this :ui/show-debug?)}
+    (str (if show-debug? "Hide" "Show") " debug")]
+   (fu/props-data-debug this show-debug?)])
 
 (def ui-task-item (c/factory TaskItem {:keyfn :task/id}))
 

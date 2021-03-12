@@ -30,7 +30,7 @@
         (not (s/valid? ::dm/task props)) "Task is invalid")
 
       (let [task (dm/make-db-task props)
-            new-user (dl/read-merge-user (fu/conj-vec current-user :user/tasks id))]
+            new-user (dl/read-merge-user crux-node (fu/conj-vec current-user :user/tasks id))]
         (log/info "Submitting tx for creating task")
         (pprint [task new-user])
         (cu/put-all crux-node [task new-user])))))
