@@ -24,7 +24,9 @@ make fe
 ```
 This starts the shadow cljs watches.
 
-Alternatively you can start the build watches via the shadow-cljs interface in the browser.
+The file `scripts/start_dev.sh` (invoked by `make fe`) generates a pprint helper ClojureScript file to enable using 
+pretty printing during development and not having to remove the namespace for production builds. 
+If you don't use `make fe` to build your ClojureScript this namespace won't exist on the first build.
 
 Please see the `shadow-cljs.edn` file for ports used for development builds.
 
@@ -50,14 +52,14 @@ nREPL remote:
   
 The $port defaults to 9000 but may be different if 9000 is already in use.
 
-Using this repl you connect to the various clojurescript builds using `(shadow/repl :build-id)`
+Using this repl you connect to the various ClojureScript builds using `(shadow/repl :build-id)`
 
 {{#server?}}
 ### backend repl:
 
 nREPL local
 
-enabled these deps aliases: dev, test, guardrails
+enable these deps aliases: dev, test, guardrails
 
 start backend repl, then:
 

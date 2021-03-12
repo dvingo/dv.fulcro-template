@@ -76,14 +76,12 @@
                                 TaskForm (merge (empty-form)
                                            {:ui/show-form-debug? false})))
    :componentDidMount (fn [this] (fmachine/begin! this ::form-machine TaskItemReturn))}
-  ;; todo, once you update the clj-utils lib version update this call
-  ;(let [{:keys [checked? disabled?]} (fu/validator-state this validator)]
   (let [{:keys [checked? disabled?]} (fu/validator-state this validator)]
     [:div
       (fu/notification {:ui/submit-state machine-state :ui/server-message message})
-     #_(when goog.DEBUG
+     (when goog.DEBUG
          (fu/ui-button #(m/toggle! this :ui/show-form-debug?) "Debug form"))
-     #_(fu/form-debug validator this show-form-debug?)
+     (fu/form-debug validator this show-form-debug?)
 
      [:h3 nil "Enter a new task"]
 
@@ -92,18 +90,19 @@
          :onChange  (fn [e] (sm/trigger! this ::form-machine :event/reset)
                             true)}
       [:div.field
-       (fu/ui-textfield this "Task Description" :task/description props :tabIndex 1
+       (fu/ui-textfield this "Task Description" :task/description props :tabIndex 0
          :autofocus? true)]
 
       [:div.ui.grid
        [:div.column.four.wide>button
-        {:tabIndex 2
+        {:tabIndex 0
          :disabled disabled?
          :onClick  (fu/prevent-default
                      #(let [task (dm/fresh-task props)]
                         (fmachine/submit-entity! this
                           {:entity          task
                            :machine         ::form-machine
+                           :creating?       true
                            :remote-mutation `create-task
                            :on-reset        cb-on-submit
                            :target          {:append [:all-tasks]}})))
