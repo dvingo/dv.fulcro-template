@@ -24,9 +24,11 @@ make fe
 ```
 This starts the shadow cljs watches.
 
-The file `scripts/start_dev.sh` (invoked by `make fe`) generates a pprint helper ClojureScript file to enable using 
-pretty printing during development and not having to remove the namespace for production builds. 
+The file `scripts/start_dev.sh` (invoked by `make fe`) generates a pprint helper ClojureScript file to
+allow requiring cljs.pprint during development and not having to remove the namespace for production builds.
 If you don't use `make fe` to build your ClojureScript this namespace won't exist on the first build.
+
+Likewise, When building for production use: `make fe-releaes`
 
 Please see the `shadow-cljs.edn` file for ports used for development builds.
 
@@ -66,7 +68,7 @@ start backend repl, then:
 ```clojure
 (start) ;; (user/start)
 ```
-This uses mount to start web server.
+This uses mount to start the web server.
 
 _note_ you do not need to specify any JVM parameters.
 

@@ -1,13 +1,13 @@
 (ns {{namespace}}.main-ws
   (:require
-    [com.fulcrologic.fulcro.components :as c]
+    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
     [com.fulcrologic.fulcro.dom :as dom]
     [com.fulcrologic.fulcro.mutations :as fm]
     [nubank.workspaces.card-types.fulcro3 :as f3]
     [nubank.workspaces.core :as ws]
-    [sablono.core :refer [html]]))
+    [reagent.core :as re]))
 
-(c/defsc FulcroDemo
+(defsc FulcroDemo
   [this {:keys [counter]}]
   {:initial-state (fn [_] {:counter 0})
    :ident         (fn [] [::id :demo])
@@ -19,7 +19,7 @@
 (ws/defcard fulcro-demo-card
   (f3/fulcro-card
     {::f3/root       FulcroDemo
-     ::f3/app        {:render-middleware (fn [_ render] (html (render)))}
+     ::f3/app        {:render-middleware (fn [_ render] (re/as-element (render)))}
      ::f3/wrap-root? true}))
 
 (defn main [] (ws/mount))

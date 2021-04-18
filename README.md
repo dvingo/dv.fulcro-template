@@ -17,7 +17,21 @@ Add a `new` alias to your user deps.edn file. For instructions see:
 
 https://github.com/seancorfield/dot-clojure
 
+Then construct a new project as specified below.
 
+After it is generated you should run:
+
+```bash
+yarn outdated
+```
+
+and
+
+```bash
+clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}}' -m antq.core
+```
+
+and update any out of date dependencies.
 
 Using Clojure CLI version 1.10.1.727 or later
 ```bash
