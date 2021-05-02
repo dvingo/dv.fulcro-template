@@ -14,6 +14,10 @@
                                     :closure-defines  {
                                                        {{namespace}}.client.application/LOG-RESPONSES true
                                                        {{namespace}}.client.client-entry/LOG_LEVEL    "debug"}}
+                :release  {:build-options
+                            {:ns-aliases
+                               {com.fulcrologic.guardrails.core com.fulcrologic.guardrails.noop
+                                {{namespace}}.client.prn-debug {{namespace}}.client.prn-debug-noop}}
                 :devtools          {:after-load {{namespace}}.client.client-entry/refresh
                                     :preloads   [;; if using the chrome extension:
                                                  com.fulcrologic.fulcro.inspect.preload
