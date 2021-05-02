@@ -2,39 +2,39 @@
 
  :deps    {org.clojure/clojure                 {:mvn/version "1.10.3"}
            org.clojure/spec.alpha              {:mvn/version "0.2.194"}
-           com.taoensso/timbre                 {:mvn/version "5.1.0"}
+           com.taoensso/timbre                 {:mvn/version "5.1.2"}
            com.taoensso/tufte                  {:mvn/version "2.2.0"}
            com.fulcrologic/fulcro              {:mvn/version "3.4.21"
                                                 :exclusions  [com.cognitect/transit-cljs
                                                               com.cognitect/transit-js]}
-           com.cognitect/transit-cljs          {:mvn/version "0.8.264"}
+           com.cognitect/transit-cljs          {:mvn/version "0.8.269"}
            com.fulcrologic/semantic-ui-wrapper {:mvn/version "2.0.1"}
            com.fulcrologic/guardrails          {:mvn/version "1.1.4"}
 
-           cljs-bean/cljs-bean                 {:mvn/version "1.6.0"}
+           cljs-bean/cljs-bean                 {:mvn/version "1.7.0"}
            dv/clj-utils                        {:mvn/version "2021-04-11.0.0"}
            reagent/reagent                     {:mvn/version "1.0.0"}
-           org.clojure/core.async              {:mvn/version "1.3.610"}
+           org.clojure/core.async              {:mvn/version "1.3.618"}
            {{#node-server?}}
            ;; http requests for node.js
            funcool/httpurr                     {:mvn/version "2.0.0"}
            {{/node-server?}}
-            metosin/reitit                     {:mvn/version "0.5.12"}
+            metosin/reitit                     {:mvn/version "0.5.13"}
            {{#server?}}
-            metosin/reitit-pedestal            {:mvn/version "0.5.12"}
+            metosin/reitit-pedestal            {:mvn/version "0.5.13"}
             com.wsscode/pathom                 {:mvn/version "2.2.31"}
             hiccup/hiccup                      {:mvn/version "2.0.0-alpha2"}
             mount/mount                        {:mvn/version "0.1.16"}
-            ring/ring-core                     {:mvn/version "1.9.0"}
+            ring/ring-core                     {:mvn/version "1.9.3"}
             ring/ring-defaults                 {:mvn/version "0.3.2"}
             bk/ring-gzip                       {:mvn/version "0.3.0"}
             ;; Crux
-            juxt/crux-core                     {:mvn/version "21.02-1.15.0-beta"}
-            juxt/crux-rocksdb                  {:mvn/version "21.02-1.15.0-beta"}
-            juxt/crux-jdbc                     {:mvn/version "21.02-1.15.0-beta"}
-            juxt/crux-metrics                  {:mvn/version "21.02-1.15.0-alpha"}
+            juxt/crux-core                     {:mvn/version "21.04-1.16.0-beta"}
+            juxt/crux-rocksdb                  {:mvn/version "21.04-1.16.0-beta"}
+            juxt/crux-jdbc                     {:mvn/version "21.04-1.16.0-beta"}
+            juxt/crux-metrics                  {:mvn/version "21.04-1.16.0-alpha"}
             ;juxt/crux-http-server               {:mvn/version "20.05-1.8.4-alpha"}
-            org.postgresql/postgresql          {:mvn/version  "42.2.18"}
+            org.postgresql/postgresql          {:mvn/version  "42.2.20"}
 
             org.slf4j/slf4j-nop                 {:mvn/version "2.0.0-alpha1"}
 
@@ -48,7 +48,7 @@
            {{#test?}}
            :clj-tests {:extra-paths ["src/test"]
                        :main-opts   ["-m" "kaocha.runner"]
-                       :extra-deps  {lambdaisland/kaocha {:mvn/version "0.0-529"}}}
+                       :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0-829"}}}
            {{/test?}}
            :guardrails {:jvm-opts  ["-Dguardrails.enabled"]}
            :dev       {:extra-paths ["src/dev"{{#test?}} "src/test"{{/test?}}{{#workspaces?}} "src/workspaces"{{/workspaces?}}{{#devcards?}} "src/devcards"{{/devcards?}}]
@@ -62,13 +62,13 @@
                                      ch.qos.logback/logback-classic      {:mvn/version "1.2.3"
                                                                           :exclusions  [org.slf4j/slf4j-api]}
                                      com.wsscode/pathom-viz-connector    {:mvn/version "1.0.3"}
-                                     org.clojure/tools.namespace         {:mvn/version "1.0.0"}
+                                     org.clojure/tools.namespace         {:mvn/version "1.1.0"}
                                      {{/server?}}
                                      {{#devcards?}}
                                      devcards/devcards                   {:mvn/version "0.2.7"}
                                      {{/devcards?}}
                                       dv/cljs-emotion                    {:mvn/version "2021-03-10.0.0"}
-                                    {{#workspaces?}}com.github.awkay/workspaces   {:mvn/version "1.0.0-RC3"}{{/workspaces?}}
+                                    {{#workspaces?}}com.github.awkay/workspaces   {:mvn/version "1.0.3"}{{/workspaces?}}
                                      ;; Formats spec explain.
                                      expound/expound                     {:mvn/version "0.8.9"}
                                      binaryage/devtools                  {:mvn/version "1.0.3"}}}}}
