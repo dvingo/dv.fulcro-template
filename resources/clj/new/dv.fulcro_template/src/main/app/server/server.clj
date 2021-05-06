@@ -6,7 +6,8 @@
     [{{namespace}}.server.config :refer [config]]
     [{{namespace}}.server.service :as service]
     [{{namespace}}.server.crux-node]
-    [taoensso.timbre :as log]))
+    [taoensso.timbre :as log])
+  (:import [java.io IOException]))
 
 ;(defstate http-server
 ;  :start
