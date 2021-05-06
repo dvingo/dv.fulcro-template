@@ -11,6 +11,24 @@ Feel free to remove or change any parts of the generated code.
 It was based on the fulcro3 template: https://github.com/fulcrologic/fulcro-template
 but differs in backend tech and will continue to diverge as features are added to this template.
 
+## Tech Stack
+
+- Fulcro
+  - Dead code elimination of guardrails (expound and pprint) during release builds.
+  - reagent rendering middleware of fulcro components.
+- styling with cljs-emotion with two example themes
+- shadow-cljs clojurescript compiler    
+  - frontend config via shadow.resource/inline
+- malli with custom registry on the client
+- reitit for URL routing, can be used with malli for parameter coercion
+- pathom 2.2.31
+- pedestal web server using jetty
+- crux database,
+  - uses single rocks-db node in dev
+  - uses in memory node during testing
+  - uses rocksdb node + postrgres tx+docs store in production.
+  - stores ring sessions in crux.
+
 # Use it
 
 Add a `new` alias to your user deps.edn file. For instructions see:
@@ -22,6 +40,7 @@ Then construct a new project as specified below.
 After it is generated you should run:
 
 ```bash
+yarn
 yarn outdated
 ```
 
@@ -92,13 +111,100 @@ It has code to render the root fulcro component to a string, but some more work 
 to ask the clojure server for the start data and inject that into the resulting page and pick it up
 on the client.
 
-The `+server` option produces a pedestal+jetty server with reitit for routing and muuntaja 
+The `+server` option produces a pedestal+jetty server with reitit for routing and muuntaja
 to handle content negotiation.
 
 The template uses helpers from https://github.com/dvingo/my-clj-utils
 to setup a pathom parser and a crux standalone rocksdb node.
 
 The server has simple password auth using cryptohash-clj to hash passwords with argon2.
+
+Here is sample output of the template with these arguments: `'["+server" "+workspaces" "+test" "+node-server"]'`
+```
+$ tree -a
+.
+├── .clj-kondo
+│   └── config.edn
+├── deps.edn
+├── .gitignore
+├── guardrails.edn
+├── karma.conf.js
+├── Makefile
+├── package.json
+├── README.md
+├── resources
+│   ├── logback.xml
+│   └── public
+│       └── workspaces
+│           └── workspaces.html
+├── scripts
+│   ├── node_server_start.sh
+│   └── start_dev.sh
+├── shadow-cljs.edn
+├── src
+│   ├── dev
+│   │   └── user.clj
+│   ├── main
+│   │   ├── config
+│   │   │   ├── defaults.edn
+│   │   │   ├── dev.edn
+│   │   │   ├── fe-config.edn
+│   │   │   ├── prod.edn
+│   │   │   └── test.edn
+│   │   └── space
+│   │       └── matterandvoid
+│   │           └── template_test
+│   │               ├── auth
+│   │               │   ├── login.cljs
+│   │               │   ├── session.clj
+│   │               │   ├── session.cljs
+│   │               │   ├── signup.cljs
+│   │               │   ├── user.clj
+│   │               │   └── user.cljs
+│   │               ├── client
+│   │               │   ├── application.cljs
+│   │               │   ├── client_entry.cljs
+│   │               │   ├── development_preload.cljs
+│   │               │   ├── malli_registry.cljs
+│   │               │   ├── prn_debug.cljs
+│   │               │   ├── prn_debug_noop.cljs
+│   │               │   └── ui
+│   │               │       ├── root.cljs
+│   │               │       └── styles
+│   │               │           ├── app_styles.cljs
+│   │               │           ├── global_styles.cljs
+│   │               │           └── style_themes.cljs
+│   │               ├── node_server.cljs
+│   │               ├── server
+│   │               │   ├── config.clj
+│   │               │   ├── crux_node.clj
+│   │               │   ├── pathom_parser.clj
+│   │               │   ├── pathom_playground.clj
+│   │               │   ├── server.clj
+│   │               │   ├── server_entry.clj
+│   │               │   └── service.clj
+│   │               └── task
+│   │                   ├── data_model.cljc
+│   │                   ├── db_layer.clj
+│   │                   ├── task_resolvers.clj
+│   │                   └── ui
+│   │                       ├── task_item.cljs
+│   │                       └── task_page.cljs
+│   ├── test
+│   │   └── space
+│   │       └── matterandvoid
+│   │           └── template_test
+│   │               └── app_tests.cljc
+│   └── workspaces
+│       └── space
+│           └── matterandvoid
+│               └── template_test
+│                   └── main_ws.cljs
+└── yarn.lock
+
+27 directories, 51 files
+
+```
 
 # Building the template repo itself
 

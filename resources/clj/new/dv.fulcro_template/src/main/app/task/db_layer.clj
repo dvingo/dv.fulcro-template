@@ -1,7 +1,7 @@
-(ns {{namespace}}.server.db-layer
+(ns {{namespace}}.task.db-layer
   (:require
     [com.fulcrologic.guardrails.core :refer [>defn >def | => ?]]
-    [{{namespace}}.data-model.task :as dm]
+    [{{namespace}}.task.data-model :as dm]
     [dv.crux-util :as cu]
     [taoensso.timbre :as log]))
 

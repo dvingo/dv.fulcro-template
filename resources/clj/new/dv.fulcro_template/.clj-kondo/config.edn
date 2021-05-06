@@ -1,0 +1,6 @@
+{:lint-as
+ {com.fulcrologic.guardrails.core/>defn   clojure.core/defn
+  com.fulcrologic.guardrails.core/>def    clojure./defn
+  com.fulcrologic.fulcro.components/defsc clojure.core/defn
+  com.wsscode.pathom.connect/defresolver  clojure.core/defn
+  com.wsscode.pathom.connect/defmutation  clojure.core/defn}}

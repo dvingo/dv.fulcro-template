@@ -8,6 +8,7 @@
                 :module-hash-names true
                 :modules           {:main {:init-fn {{namespace}}.client.client-entry/init
                                            :entries [{{namespace}}.client.client-entry]}}
+                :closure-defines   {malli.registry/type "custom"}
                 ;; guardrails checks only during dev
                 :dev               {:compiler-options {:external-config {:guardrails {}
                                                                          :fulcro     {:wrap-inputs? false}}}

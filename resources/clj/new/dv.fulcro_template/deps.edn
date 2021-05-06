@@ -10,6 +10,7 @@
            com.cognitect/transit-cljs          {:mvn/version "0.8.269"}
            com.fulcrologic/semantic-ui-wrapper {:mvn/version "2.0.1"}
            com.fulcrologic/guardrails          {:mvn/version "1.1.4"}
+           metosin/malli                       {:mvn/version "0.5.0"}
 
            cljs-bean/cljs-bean                 {:mvn/version "1.7.0"}
            dv/clj-utils                        {:mvn/version "2021-04-11.0.0"}
@@ -57,7 +58,9 @@
                        :extra-deps  {org.clojure/clojurescript           {:mvn/version "1.10.844"}
                                      org.clojure/test.check              {:mvn/version "1.1.0"}
                                      thheller/shadow-cljs                {:mvn/version "2.12.5"}
-                                     {{#server?}}
+                                     setzer22/malli-instrument {:git/url "https://github.com/setzer22/malli-instrument.git"
+                                                                 :sha     "5fdf2cc5ca7a2deabfcd787f1086f6a3e5615936"}
+                                                                         {{#server?}}
                                      ;; Logging for pedestal, not sure if exclusion is necessary.
                                      ch.qos.logback/logback-classic      {:mvn/version "1.2.3"
                                                                           :exclusions  [org.slf4j/slf4j-api]}

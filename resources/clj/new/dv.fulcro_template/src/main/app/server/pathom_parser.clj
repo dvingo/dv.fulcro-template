@@ -4,7 +4,7 @@
     [dv.pathom :refer [build-parser]]
     [mount.core :refer [defstate]]
     [taoensso.timbre :as log]
-    [{{namespace}}.server.task-resolvers :as task]
+    [{{namespace}}.task.task-resolvers :as task]
     [{{namespace}}.auth.session :as session]
     [{{namespace}}.auth.user :as user]
     [{{namespace}}.server.config :refer [config]]

@@ -1,4 +1,4 @@
-(ns {{namespace}}.server.task-resolvers
+(ns {{namespace}}.task.task-resolvers
   (:require
     [clojure.core.async :refer [go <! <!! >! >!! chan]]
     [clojure.pprint :refer [pprint]]
@@ -6,8 +6,8 @@
     [com.fulcrologic.guardrails.core :refer [>defn >def | => ?]]
     [com.wsscode.pathom.connect :as pc]
     [{{namespace}}.auth.user :as user]
-    [{{namespace}}.data-model.task :as dm]
-    [{{namespace}}.server.db-layer :as dl]
+    [{{namespace}}.task.data-model :as dm]
+    [{{namespace}}.task.db-layer :as dl]
     [dv.fulcro-util :as fu]
     [dv.crux-util :as cu]
     [taoensso.timbre :as log]))
@@ -21,7 +21,7 @@
 (pc/defmutation create-task-mutation
   [{:keys [current-user crux-node]}
    {:task/keys [id description] :as props}]
-  {::pc/sym '{{namespace}}.client.ui.task-item/create-task}
+  {::pc/sym '{{namespace}}.task/create-task}
   (let [user-tasks (:user/tasks current-user)]
     (log/info "props: ") (pprint props)
     (or

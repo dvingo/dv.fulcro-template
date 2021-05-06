@@ -6,12 +6,14 @@
     [clojure.edn :as edn]
     [{{namespace}}.client.ui.root :as root]
     [{{namespace}}.client.application :refer [SPA]]
+    [{{namespace}}.client.malli-registry :as reg]
     {{#server?}}
     [{{namespace}}.auth.login :refer [Login Session]]
     [{{namespace}}.auth.session :as session]
     {{/server?}}
-    [shadow.resource :as rc]
     [dv.fulcro-reitit :as fr]
+    [malli.registry :as mr]
+    [shadow.resource :as rc]
     [taoensso.timbre :as log]))
 
 ;; set logging lvl using goog-define, see shadow-cljs.edn
@@ -34,6 +36,7 @@
 (defn ^:export init []
   (log/merge-config! log-config)
   (log/info "Application starting.")
+  (mr/set-default-registry! (mr/mutable-registry reg/registry*))
   (app/set-root! SPA root/Root {:initialize-state? true})
   (fr/start-router! SPA)
   {{#server?}}

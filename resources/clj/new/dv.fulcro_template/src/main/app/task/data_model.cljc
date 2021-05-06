@@ -1,4 +1,4 @@
-(ns {{namespace}}.data-model.task
+(ns {{namespace}}.task.data-model
   (:require
     [clojure.spec.alpha :as s]
     [clojure.string :as str]

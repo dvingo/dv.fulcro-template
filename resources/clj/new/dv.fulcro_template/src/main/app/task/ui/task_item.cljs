@@ -1,4 +1,4 @@
-(ns {{namespace}}.client.ui.task-item
+(ns {{namespace}}.task.ui.task-item
   (:require
     [clojure.spec.alpha :as s]
     [com.fulcrologic.fulcro.algorithms.form-state :as fs]
@@ -8,7 +8,7 @@
     [dv.cljs-emotion-reagent :refer [defstyled]]
     [dv.fulcro-util :as fu]
     [dv.fulcro-entity-state-machine :as fmachine]
-    [{{namespace}}.data-model.task :as dm]
+    [{{namespace}}.task.data-model :as dm]
     [taoensso.timbre :as log]))
 
 (defstyled flex :div
@@ -97,15 +97,23 @@
        [:div.column.four.wide>button
         {:tabIndex 0
          :disabled disabled?
-         :onClick  (fu/prevent-default
+         :onClick
+                   {{#server?}}
+                   (fu/prevent-default
                      #(let [task (dm/fresh-task props)]
                         (fmachine/submit-entity! this
                           {:entity          task
                            :machine         ::form-machine
                            :creating?       true
-                           :remote-mutation `create-task
+                           :remote-mutation '{{namespace}}.task/create-task
                            :on-reset        cb-on-submit
                            :target          {:append [:all-tasks]}})))
+                    {{/server?}}
+                   {{^server?}}
+                    #(log/info "Clicked save a task!")
+                    {{/server?}}
+
+
          :class    (str "ui primary button" (when loading? " loading"))}
         "Enter"]
 

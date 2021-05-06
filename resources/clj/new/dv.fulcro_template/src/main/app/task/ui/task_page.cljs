@@ -1,9 +1,9 @@
-(ns {{namespace}}.client.ui.task-page
+(ns {{namespace}}.task.ui.task-page
   (:require
     [com.fulcrologic.fulcro.components :as c :refer [defsc]]
     [dv.fulcro-reitit :as fr]
     {{#server?}}[com.fulcrologic.fulcro.data-fetch :as df]{{/server?}}
-    [{{namespace}}.client.ui.task-item :refer [ui-task-list TaskList TaskForm ui-task-form TaskItem]]))
+    [{{namespace}}.task.ui.task-item :refer [ui-task-list TaskList TaskForm ui-task-form TaskItem]]))
 
 (defsc TaskPage [this {:keys [task-list task-form]}]
   {:query         [{:task-list (c/get-query TaskList)}

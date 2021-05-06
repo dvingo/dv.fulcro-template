@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.0.0",
     "create-react-class": "^15.7.0",
 {{#node-server?}}
-    "express": "^4.17.1",
+    "ws": "^7.4.5",
 {{/node-server?}}
     "polished": "^4.1.1",
     "react-grid-layout": "^1.2.4",

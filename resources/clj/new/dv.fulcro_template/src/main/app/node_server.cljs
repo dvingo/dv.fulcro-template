@@ -2,7 +2,6 @@
   (:require
     ["http" :as http]
     ["react" :as react]
-    ["react-dom/server" :as react-server]
     [cognitect.transit :as ct]
     [clojure.pprint :refer [pprint]]
     [clojure.string :as str]
@@ -21,6 +20,8 @@
     [promesa.core :as p]
     [reitit.core :as r]
     [dv.fulcro-reitit :as fr]
+    [reagent.core :as re]
+    [reagent.dom.server :as rdom]
     [{{namespace}}.client.ui.root :as root]
     [taoensso.timbre :as log]))
 
@@ -86,7 +87,8 @@
         (:body response)))))
 
 (defn init-app [root-component]
-  (let [app (app/fulcro-app {:render-root! react-server/renderToString})]
+  (let [app (app/fulcro-app {:render-root! rdom/render-to-string
+                             :render-middleware (fn [this render] (re/as-element (render)))})]
     (app/set-root! app root-component {:initialize-state? true})
     (dr/initialize! app)
     ;; add any user state machines begin! here.
@@ -102,7 +104,7 @@
 (defn render-app-to-str [app cb]
   (js/setTimeout
     #(binding [*app* app]
-       (cb (react-server/renderToString
+       (cb (rdom/render-to-string
              ((comp/factory root/Root) (data-tree app root/Root)))))))
 
 (defn req-handler [req res]

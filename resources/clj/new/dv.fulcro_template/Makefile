@@ -16,7 +16,7 @@ endif
 
 shadow-server:
 > yarn
-> yarn shadow-cljs server -A:guardrails
+> bash ./scripts/start_dev.sh
 
 fe:
 > bash ./scripts/start_dev.sh
@@ -50,7 +50,7 @@ fe-test:
 watch-all: watch-$(fe-module){{#workspaces?}}watch-workspaces{{/workspaces?}}{{#test?}}watch-client-test{{/test?}}
 
 fe-release:
-> bash ./scripts/build_fe_release.sh $(fe-module)
+> yarn shadow-cljs release $(fe-module)
 {{#node-server?}}
 builds/$(node-server-file):
 > yarn shadow-cljs release node-server

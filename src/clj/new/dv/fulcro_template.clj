@@ -3,7 +3,7 @@
     [clojure.pprint :refer [pprint]]
     [clj.new.templates :refer [renderer project-data name-to-path sanitize-ns ->files]]
     [clj.new.dv.fulcro-template.options.base :as base]
-    ;[clj.new.dv.fulcro-template.options.kondo :as kondo]
+    [clj.new.dv.fulcro-template.options.kondo :as kondo]
     [clj.new.dv.fulcro-template.options.devcards :as devcards]
     [clj.new.dv.fulcro-template.options.workspaces :as workspaces]
     [clj.new.dv.fulcro-template.options.test :as test]
@@ -19,7 +19,8 @@
 (defn app-files [data options]
   (concat
     (base/files data)
-    ;   (when (helpers/option? kondo/option options) (kondo/files data))
+    (kondo/files data)
+    ;(when (helpers/option? kondo/option options) (kondo/files data))
     (when (helpers/option? node-server/option options) (node-server/files data))
     (when (helpers/option? server/option options) (server/files data))
     (when (helpers/option? test/option options) (test/files data))
@@ -42,7 +43,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (def available-set
-  #{;kondo/option
+  #{ ;kondo/option
     helpers/all-option
     devcards/option
     node-server/option

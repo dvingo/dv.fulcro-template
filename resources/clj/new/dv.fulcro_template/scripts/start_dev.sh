@@ -2,31 +2,7 @@
 
 set -euo pipefail
 
-# dirt cheap DCE
-write_prn_file() {
-  echo "(ns {{namespace}}.client.prn-debug
-  (:require [clojure.pprint :as pprint]))
-
-;;
-;; Hello.
-;;
-;; I'm generated in the scripts/start_dev.sh script so I won't show up in production builds.
-;; See scripts/build_prod.sh for the release version of this namespace.
-;;
-;;
-
-(defn ^:export pprint-str [v] (with-out-str (pprint/pprint v)))
-(defn ^:export pprint [v] (pprint/pprint v))
-
-;; To use from within the browser dev tools console
-(set! js/pprint_str pprint-str)
-(set! js/pprint pprint)
-" > src/main/{{nested-dirs}}/client/prn_debug.cljs
-}
-
 main() {
-  write_prn_file
-
   echo yarn install
   yarn install
 
