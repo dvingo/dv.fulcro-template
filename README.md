@@ -119,7 +119,9 @@ to setup a pathom parser and a crux standalone rocksdb node.
 
 The server has simple password auth using cryptohash-clj to hash passwords with argon2.
 
-Here is sample output of the template with these arguments: `'["+server" "+workspaces" "+test" "+node-server"]'`
+Here is sample output of the template with these arguments: 
+
+`'["+server" "+workspaces" "+test" "+node-server"]'`
 ```
 $ tree -a
 .
