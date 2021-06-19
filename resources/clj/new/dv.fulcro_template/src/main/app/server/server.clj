@@ -44,10 +44,10 @@
                    (catch Exception e
                      (println "EXCeption 2" e " type: " (type e))))]
         (log/info "started server val: " r)
-        (when-not r
-          (when (< 10000 port))
-          (recur
-            (merge (service/make-service-map)
-              (update pedestal-config ::http/port inc)))))))
+        (or r
+            (when (< 10000 port)
+              (recur
+                (merge (service/make-service-map)
+                       (update pedestal-config ::http/port inc))))))))
   :stop
   (http/stop http-server))
