@@ -33,7 +33,7 @@ but differs in backend tech and will continue to diverge as features are added t
 
 Add a `new` alias to your user deps.edn file. For instructions see:
 
-https://github.com/seancorfield/dot-clojure
+https://github.com/seancorfield/clj-new
 
 Then construct a new project as specified below.
 

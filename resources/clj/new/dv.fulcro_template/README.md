@@ -14,15 +14,7 @@ In one terminal:
 ```bash
 make
 ```
-this runs `yarn` and starts the shadow-cljs server.
-
-Wait for this to complete, then:
-
-In another terminal run:
-```bash
-make fe
-```
-This starts the shadow cljs watches.
+this runs `yarn install` and starts the shadow-cljs watch processes.
 
 Please see the `shadow-cljs.edn` file for ports used for development builds.
 
