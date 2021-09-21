@@ -31,7 +31,6 @@ resources/public/devcards/*
 !resources/public/devcards/devcards.html
 {{/devcards?}}
 {{#server?}}
-crux-store
+xtdb-store
 {{/server?}}
 builds/
-prn_debug.cljs

@@ -1,10 +1,8 @@
 (ns {{namespace}}.client.prn-debug
   (:require [clojure.pprint :as pprint]))
-;; Hello.
 ;;
 ;;
-;; I'm generated in the scripts/start_dev.sh script.
-;;
+;; See shadow-cljs.edn configuration for ns-aliases used during release builds to not have cljs-pprint included in the bundle.
 ;;
 ;;
 
