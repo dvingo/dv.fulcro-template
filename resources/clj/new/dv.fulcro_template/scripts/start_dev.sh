@@ -9,7 +9,6 @@ main() {
   echo '
   Greetings. I trust you will have an excellent day.
 
-
   Starting shadow-cljs watches for you via the following command:
 
   yarn run shadow-cljs watch main{{#node-server?}} node-server{{/node-server?}}{{#test?}} test{{/test?}}{{#devcards?}} devcards{{/devcards?}}{{#workspaces?}} workspaces{{/workspaces?}}

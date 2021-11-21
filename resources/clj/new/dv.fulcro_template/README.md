@@ -12,6 +12,8 @@ This template uses `yarn` to handle npm dependencies.
 In one terminal:
 
 ```bash
+# If you use nvm, if not see .nvmrc for the expected node.js version
+nvm use
 make
 ```
 this runs `yarn install` and starts the shadow-cljs watch processes.

@@ -11,6 +11,7 @@
      ["Makefile" (helpers/render "Makefile" data)]
      ["README.md" (helpers/render "README.md" data)]
      ["shadow-cljs.edn" (helpers/render "shadow-cljs.edn" data)]
+     [".nvmrc" (helpers/render ".nvmrc" data)]
 
      ;; Scripts
      ["scripts/start_dev.sh" (helpers/render "scripts/start_dev.sh" data)]

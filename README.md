@@ -31,6 +31,25 @@ but differs in backend tech and will continue to diverge as features are added t
 
 # Use it
 
+## TLDR
+
+```bash 
+# Only needs to be done once, to install the tool:
+clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.362"}' :as clj-new
+
+# Name your app:
+org_name="com.my-org"
+app_name="my-app"
+clj -Tclj-new create :template dv.fulcro-template :args '["+all"]' :name "$org_name/$app_name"
+cd "$app_name"
+# Requires node > 16
+nvm use
+# Start compiling clojurescript
+make
+# Connect your editor of choice and start the server if you have one. This can be started with:
+make be-repl
+```
+
 Add a `new` alias to your user deps.edn file. For instructions see:
 
 https://github.com/seancorfield/clj-new
