@@ -73,7 +73,7 @@
                                                                 {{#devcards?}}
                                                                                  devcards/devcards {:mvn/version "0.2.7"}
                                                                                  {{/devcards?}}
-                                                                 dv/cljs-emotion {:mvn/version "2021-03-10.0.0"}
+                                                                 dv/cljs-emotion {:mvn/version "2021-11-20.0.0"}
                                                                  {{#workspaces?}}    com.github.awkay/workspaces {:mvn/version "1.0.3"} {{/workspaces?}}
                                                                   ;; Formats spec explain.
                                                                   expound/expound    {:mvn/version "0.8.10"}
