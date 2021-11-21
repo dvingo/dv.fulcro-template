@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>dv.fulcro-template</groupId>
   <artifactId>clj-template</artifactId>
-  <version>2021-11-20.0.0</version>
+  <version>2021-11-21.0.0</version>
   <name>fulcro-template</name>
   <description>clj-new template for Fulcro applications</description>
   <url>https://github.com/dvingo/dv.fulcro-template</url>

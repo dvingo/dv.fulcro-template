@@ -7,22 +7,7 @@
     [{{namespace}}.server.service :as service]
     [{{namespace}}.server.xtdb-node]
     [taoensso.timbre :as log])
-  (:import [java.io IOException]))
-
-;(defstate http-server
-;  :start
-;  (let [pedestal-config       (::http/config config)
-;        service (merge (service/make-service-map) pedestal-config)
-;        port (::http/port pedestal-config)]
-;    (when (nil? port)
-;      (throw (Exception. "You must set a port as the environment variable PORT.")))
-;    (log/info "Final service config: ")
-;    (pprint service)
-;    (log/info "Starting server on port" port)
-;    (-> service http/create-server http/start))
-;
-;  :stop
-;  (http/stop http-server))
+  (:import [java.net BindException]))
 
 (defstate http-server
   :start
@@ -35,19 +20,22 @@
 
     (loop [service-map service]
       (let [port (::http/port service-map)
-            r    (try
+            server-val
+                 (try
                    (log/info "Starting server on port" port)
                    (-> service-map http/create-server http/start)
-                   (catch IOException _
-                     (println "EXCeption 1")
-                     (log/info "Port " port " already in use trying" (inc port) "."))
                    (catch Exception e
-                     (println "EXCeption 2" e " type: " (type e))))]
-        (log/info "started server val: " r)
-        (or r
-            (when (< 10000 port)
-              (recur
-                (merge (service/make-service-map)
-                       (update pedestal-config ::http/port inc))))))))
+                     (if (instance? BindException (.getCause e))
+                       (if (< 10000 port) ::max-attempts-reached ::port-already-bound)
+                       (log/error "Exception when trying to start the server: " e))))]
+        (cond
+          (= server-val ::port-already-bound)
+          (do
+            (log/info "Port " port " already in use trying" (inc port) ".")
+            (recur (update service-map ::http/port inc)))
+          (= server-val ::max-attempts-reached)
+          (do (log/error "Max attempts trying to bind server to an open port. Failed to start server.") nil)
+
+          server-val server-val))))
   :stop
   (http/stop http-server))
