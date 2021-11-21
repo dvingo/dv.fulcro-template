@@ -9,12 +9,12 @@
   :ns-whitelist []
   :ns-blacklist []}
 
- :{{namespace}}.server.crux-node/config
- {:db-spec {:dbname   "crux-db"
+ :{{namespace}}.server.xtdb-node/config
+ {:db-spec {:dbname   "xtdb-db"
             :host     "localhost"
             :port     5432
-            :user     "crux-user"
-            :password "crux-password"}}
+            :user     "xtdb-user"
+            :password "xtdb-password"}}
 
  :{{namespace}}.server.pathom/config
  {:connect-viz? false}

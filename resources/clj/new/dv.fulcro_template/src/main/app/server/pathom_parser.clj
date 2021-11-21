@@ -8,7 +8,7 @@
     [{{namespace}}.auth.session :as session]
     [{{namespace}}.auth.user :as user]
     [{{namespace}}.server.config :refer [config]]
-    [{{namespace}}.server.crux-node :refer [crux-node]]))
+    [{{namespace}}.server.xtdb-node :refer [xtdb-node]]))
 
 (def all-resolvers
   [session/resolvers
@@ -27,6 +27,6 @@
        :index-explorer?    index-explorer?
        :enable-pathom-viz? connect-viz?
        :env-additions      (fn [env]
-                             {:crux-node    crux-node
+                             {:xtdb-node    xtdb-node
                               :config       config
                               :current-user (user/get-current-user env)})})))

@@ -2,8 +2,9 @@
  {:io.pedestal.http/port            :env.edn/PORT
   :io.pedestal.http/allowed-origins ["localhost"]}
 
- :{{namespace}}.server.crux-node/config
- {:db-spec {:dbname   "mydb"
+ :{{namespace}}.server.xtdb-node/config
+ {:node-type :postgres
+  :db-spec {:dbname   "mydb"
             :host     "my-db-hostname.com"
             :port     44444
             :user     "myuser"

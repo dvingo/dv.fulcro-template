@@ -5,7 +5,7 @@
     [clojure.string :as string]
     [com.fulcrologic.fulcro.server.api-middleware :refer [handle-api-request]]
     [com.fulcrologic.guardrails.core :refer [>defn => | ?]]
-    [dv.crux-ring-session-store :refer [crux-session-store]]
+    [dv.xtdb-ring-session-store :refer [xtdb-session-store]]
     [dv.fulcro-util :as fu]
     [hiccup.page :refer [html5]]
     [io.pedestal.http :as http]
@@ -20,7 +20,7 @@
     [reitit.http.interceptors.parameters :as parameters]
     [reitit.pedestal :as rpedestal]
     [{{namespace}}.server.config :refer [config]]
-    [{{namespace}}.server.crux-node :refer [crux-node]]
+    [{{namespace}}.server.xtdb-node :refer [xtdb-node]]
     [{{namespace}}.server.pathom-parser :refer [parser]]
     [taoensso.timbre :as log]))
 
@@ -174,7 +174,7 @@
     {:env                  :prod
      ::http/routes         []
      ::http/resource-path  "/public"
-     ::http/enable-session {:store        (crux-session-store crux-node)
+     ::http/enable-session {:store        (xtdb-session-store xtdb-node)
                             :cookie-attrs
                                           (if dev? {:http-only true}
                                                    {:http-only true

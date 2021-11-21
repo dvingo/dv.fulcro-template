@@ -7,6 +7,9 @@
  {:env :dev
   :io.pedestal.http/join? false}
 
+ :{{namespace}}.server.xtdb-node/config
+ {:node-type :rocks}
+
  :{{namespace}}.server.pathom-parser/config
    {:connect-viz?    true
     :index-explorer? true

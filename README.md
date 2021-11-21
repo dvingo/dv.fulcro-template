@@ -21,13 +21,13 @@ but differs in backend tech and will continue to diverge as features are added t
   - frontend config via shadow.resource/inline
 - malli with custom registry on the client
 - reitit for URL routing, can be used with malli for parameter coercion
-- pathom 2.2.31
+- pathom 2.4.0
 - pedestal web server using jetty
-- crux database,
+- XTDB database
   - uses single rocks-db node in dev
   - uses in memory node during testing
   - uses rocksdb node + postrgres tx+docs store in production.
-  - stores ring sessions in crux.
+  - stores ring sessions in XTDB.
 
 # Use it
 
@@ -134,7 +134,7 @@ The `+server` option produces a pedestal+jetty server with reitit for routing an
 to handle content negotiation.
 
 The template uses helpers from https://github.com/dvingo/my-clj-utils
-to setup a pathom parser and a crux standalone rocksdb node.
+to setup a pathom parser and a XTDB standalone rocksdb node.
 
 The server has simple password auth using cryptohash-clj to hash passwords with argon2.
 
@@ -198,7 +198,7 @@ $ tree -a
 │   │               ├── node_server.cljs
 │   │               ├── server
 │   │               │   ├── config.clj
-│   │               │   ├── crux_node.clj
+│   │               │   ├── xtdb_node.clj
 │   │               │   ├── pathom_parser.clj
 │   │               │   ├── pathom_playground.clj
 │   │               │   ├── server.clj

@@ -29,7 +29,7 @@
    ["src/main/{{nested-dirs}}/server/config.clj" (helpers/render "src/main/app/server/config.clj" data)]
    ["src/main/{{nested-dirs}}/task/db_layer.clj" (helpers/render "src/main/app/task/db_layer.clj" data)]
    ["src/main/{{nested-dirs}}/task/task_resolvers.clj" (helpers/render "src/main/app/task/task_resolvers.clj" data)]
-   ["src/main/{{nested-dirs}}/server/crux_node.clj" (helpers/render "src/main/app/server/crux_node.clj" data)]
+   ["src/main/{{nested-dirs}}/server/xtdb_node.clj" (helpers/render "src/main/app/server/xtdb_node.clj" data)]
    ["src/main/{{nested-dirs}}/server/pathom_parser.clj" (helpers/render "src/main/app/server/pathom_parser.clj" data)]
    ["src/main/{{nested-dirs}}/server/pathom_playground.clj" (helpers/render "src/main/app/server/pathom_playground.clj" data)]
    ["src/main/{{nested-dirs}}/server/server.clj" (helpers/render "src/main/app/server/server.clj" data)]

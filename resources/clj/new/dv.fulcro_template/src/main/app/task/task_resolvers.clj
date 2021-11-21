@@ -9,7 +9,7 @@
     [{{namespace}}.task.data-model :as dm]
     [{{namespace}}.task.db-layer :as dl]
     [dv.fulcro-util :as fu]
-    [dv.crux-util :as cu]
+    [dv.xtdb-util :as cu]
     [taoensso.timbre :as log]))
 
 (defmacro validity-check
@@ -19,7 +19,7 @@
      (fu/server-error msg#)))
 
 (pc/defmutation create-task-mutation
-  [{:keys [current-user crux-node]}
+  [{:keys [current-user xtdb-node]}
    {:task/keys [id description] :as props}]
   {::pc/sym '{{namespace}}.task/create-task}
   (let [user-tasks (:user/tasks current-user)]
@@ -30,20 +30,20 @@
         (not (s/valid? ::dm/task props)) "Task is invalid")
 
       (let [task (dm/make-db-task props)
-            new-user (dl/read-merge-user crux-node (fu/conj-vec current-user :user/tasks id))]
+            new-user (dl/read-merge-user xtdb-node (fu/conj-vec current-user :user/tasks id))]
         (log/info "Submitting tx for creating task")
         (pprint [task new-user])
-        (cu/put-all crux-node [task new-user])))))
+        (cu/put-all xtdb-node [task new-user])))))
 
-(pc/defresolver get-task [{:keys [crux-node]} {:task/keys [id]}]
+(pc/defresolver get-task [{:keys [xtdb-node]} {:task/keys [id]}]
   {::pc/input #{:task/id}
    ::pc/output [:task/description]}
   (log/info "get-task resolver id: " id)
-  (dl/get-task crux-node id))
+  (dl/get-task xtdb-node id))
 
-(pc/defresolver all-tasks [{:keys [crux-node]} {:task/keys [id]}]
+(pc/defresolver all-tasks [{:keys [xtdb-node]} {:task/keys [id]}]
   {::pc/output [{:all-tasks dm/db-task-keys}]}
   (log/info "all-tasks resolver")
-  {:all-tasks (dl/get-all-tasks crux-node)})
+  {:all-tasks (dl/get-all-tasks xtdb-node)})
 
 (def resolvers [create-task-mutation get-task all-tasks])

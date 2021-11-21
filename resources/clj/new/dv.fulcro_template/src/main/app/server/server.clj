@@ -5,7 +5,7 @@
     [mount.core :refer [defstate]]
     [{{namespace}}.server.config :refer [config]]
     [{{namespace}}.server.service :as service]
-    [{{namespace}}.server.crux-node]
+    [{{namespace}}.server.xtdb-node]
     [taoensso.timbre :as log])
   (:import [java.io IOException]))
 
