@@ -49,14 +49,21 @@ make
 # Connect your editor of choice and start the server if you have one. This can be started with:
 make be-repl
 ```
+## Have time, will read
 
-Add a `new` alias to your user deps.edn file. For instructions see:
+clj-new can be invoked as a clojure tool or via a deps.edn alias,
+
+You can install clj-new as a tool with:
+```bash
+clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.362"}' :as clj-new
+```
+Or add a `new` alias to your user deps.edn file. For instructions see:
 
 https://github.com/seancorfield/clj-new
 
-Then construct a new project as specified below.
+Then construct a new project as specified below
 
-After it is generated you should run:
+After your project is generated you should run:
 
 ```bash
 yarn
@@ -69,7 +76,12 @@ and
 clojure -Sdeps '{:deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}}' -m antq.core
 ```
 
-and update any out of date dependencies.
+which will list out of date dependencies for you to update.
+
+----
+Commands to make a new project directory from this template.
+
+If you installed clj-new as a tool replace `clj -X:new` with `clj -Tclj-new create` in the commands below.
 
 Using Clojure CLI version 1.10.1.727 or later
 ```bash
@@ -84,22 +96,6 @@ clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args 
 
 # output to another directory name, and overwrite if it already exists:
 clj -X:new :template dv.fulcro-template :name my-username/my-project-name :output '"my-preferred-project-name"' :force true
-```
-
-Using Clojure CLI versions before 1.10.1.727:
-
-```bash
-# Frontend only app
-clj -A:new dv.fulcro-template my-username/my-project-name
-
-# Pass one or more options
-clj -A:new dv.fulcro-template my-username/my-project-name +devcards +workspaces +test +node-server +server
-
-# Or include them all:
-clj -A:new dv.fulcro-template my-username/my-project-name +all
-
-# output to another directory name:
-clj -A:new dv.fulcro-template my-username/my-project-name -o my-preferred-project-name
 ```
 
 If you're working on the template itself, you can generate a project from the filesystem:
