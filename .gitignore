@@ -4,6 +4,7 @@
 *.jar
 *.class
 /.cpcache
+resources/clj/new/dv.fulcro_template/.clj-kondo/.cache/
 /.lein-*
 /.nrepl-history
 /.nrepl-port
