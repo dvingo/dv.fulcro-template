@@ -1,21 +1,21 @@
 {:paths ["src/main" "resources"]
 
  :deps  {org.clojure/clojure                 {:mvn/version "1.10.3"}
-         org.clojure/spec.alpha              {:mvn/version "0.2.194"}
+         org.clojure/spec.alpha              {:mvn/version "0.3.218"}
          com.taoensso/timbre                 {:mvn/version "5.1.2"}
          com.taoensso/tufte                  {:mvn/version "2.2.0"}
-         com.fulcrologic/fulcro              {:mvn/version "3.5.8"
+         com.fulcrologic/fulcro              {:mvn/version "3.5.9"
                                               :exclusions  [com.cognitect/transit-cljs
                                                             com.cognitect/transit-js]}
          com.cognitect/transit-cljs          {:mvn/version "0.8.269"}
          com.fulcrologic/semantic-ui-wrapper {:mvn/version "2.0.1"}
-         com.fulcrologic/guardrails          {:mvn/version "1.1.7"}
-         metosin/malli                       {:mvn/version "0.6.2"}
+         com.fulcrologic/guardrails          {:mvn/version "1.1.10"}
+         metosin/malli                       {:mvn/version "0.7.5"}
 
          cljs-bean/cljs-bean                 {:mvn/version "1.7.0"}
          dv/clj-utils                        {:mvn/version "2021-10-31.0.0"}
          reagent/reagent                     {:mvn/version "1.1.0"}
-         org.clojure/core.async              {:mvn/version "1.4.627"}
+         org.clojure/core.async              {:mvn/version "1.5.648"}
          {{#node-server?}}
           ;; http requests for node.js
                          funcool/httpurr {:mvn/version "2.0.0"}
@@ -31,12 +31,12 @@
            bk/ring-gzip {:mvn/version "0.3.0"}
 
            ;; XTDB
-           com.xtdb/xtdb-core                  {:mvn/version "1.19.0"}
-           com.xtdb/xtdb-metrics               {:mvn/version "1.19.0"}
-           com.xtdb/xtdb-rocksdb               {:mvn/version "1.19.0"}
-           com.xtdb/xtdb-jdbc                  {:mvn/version "1.19.0"}
-           com.xtdb/xtdb-http-server           {:mvn/version "1.19.0"}
-           com.xtdb/xtdb-lmdb                  {:mvn/version "1.19.0"}
+           com.xtdb/xtdb-core                  {:mvn/version "1.20.0"}
+           com.xtdb/xtdb-metrics               {:mvn/version "1.20.0"}
+           com.xtdb/xtdb-rocksdb               {:mvn/version "1.20.0"}
+           com.xtdb/xtdb-jdbc                  {:mvn/version "1.20.0"}
+           com.xtdb/xtdb-http-server           {:mvn/version "1.20.0"}
+           com.xtdb/xtdb-lmdb                  {:mvn/version "1.20.0"}
            org.postgresql/postgresql           {:mvn/version "42.2.18"}
 
            org.slf4j/slf4j-nop {:mvn/version "2.0.0-alpha5"}
@@ -51,29 +51,29 @@
                                    {{#test?}}
                                                 :clj-tests {:extra-paths ["src/test"]
                                                             :main-opts   ["-m" "kaocha.runner"]
-                                                            :extra-deps  {lambdaisland/kaocha {:mvn/version "1.0-861"}}}
+                                                            :extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.972"}}}
                                                 {{/test?}}
                                     :guardrails {:jvm-opts ["-Dguardrails.enabled"]}
                                     :dev        {:extra-paths ["src/dev" {{#test?}} "src/test" {{/test?}} {{#workspaces?}} "src/workspaces" {{/workspaces?}} {{#devcards?}} "src/devcards" {{/devcards?}}]
                                                  :jvm-opts    ["-XX:-OmitStackTraceInFastThrow"]
 
-                                                 :extra-deps  {org.clojure/clojurescript {:mvn/version "1.10.893"}
-                                                               org.clojure/test.check    {:mvn/version "1.1.0"}
-                                                               thheller/shadow-cljs      {:mvn/version "2.16.5"}
+                                                 :extra-deps  {org.clojure/clojurescript {:mvn/version "1.11.4"}
+                                                               org.clojure/test.check    {:mvn/version "1.1.1"}
+                                                               thheller/shadow-cljs      {:mvn/version "2.16.10"}
                                                                {{#server?}}
                                                                 ;; Logging for pedestal and XTDB
-                                                                org.clojure/tools.logging {:mvn/version "1.1.0"}
-                                                                ch.qos.logback/logback-classic {:mvn/version "1.2.5"}
-                                                                ch.qos.logback/logback-core {:mvn/version "1.2.5"}
+                                                                org.clojure/tools.logging {:mvn/version "1.2.3"}
+                                                                ch.qos.logback/logback-classic {:mvn/version "1.2.10"}
+                                                                ch.qos.logback/logback-core {:mvn/version "1.2.10"}
                                                                 org.slf4j/slf4j-api {:mvn/version "1.7.32"}
 
-                                                                com.wsscode/pathom-viz-connector {:mvn/version "1.0.3"}
+                                                                com.wsscode/pathom-viz-connector {:mvn/version "2021.10.16"}
                                                                 org.clojure/tools.namespace {:mvn/version "1.1.0"}
                                                                 {{/server?}}
                                                                 {{#devcards?}}
                                                                                  devcards/devcards {:mvn/version "0.2.7"}
                                                                                  {{/devcards?}}
-                                                                 dv/cljs-emotion {:mvn/version "2021-11-20.0.0"}
+                                                                 dv/cljs-emotion {:mvn/version "2021-12-05.0.0"}
                                                                  {{#workspaces?}}    com.github.awkay/workspaces {:mvn/version "1.0.3"} {{/workspaces?}}
                                                                   ;; Formats spec explain.
                                                                   expound/expound    {:mvn/version "0.8.10"}
