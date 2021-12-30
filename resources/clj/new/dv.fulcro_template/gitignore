@@ -12,6 +12,7 @@
 .repl
 classes
 node_modules
+.clj-kondo/.cache
 out
 pom.xml
 pom.xml*

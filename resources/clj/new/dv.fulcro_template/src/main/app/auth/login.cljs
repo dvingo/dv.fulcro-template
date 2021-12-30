@@ -17,6 +17,8 @@
     [{{namespace}}.auth.session :as session]
     [taoensso.timbre :as log]))
 
+(defstyled hover-hand :div {":hover" {:cursor "pointer"}})
+
 (defsc Session
   "Session representation. Used primarily for server queries.
   On-screen representation happens in Login component."
@@ -113,7 +115,7 @@
        (if logged-in?
          [:button.item
           {:on-click #(sm/trigger! this ::session/session :event/logout)}
-          (fu/hover-hand nil (str current-user ent/nbsp "Log out"))]
+          (hover-hand nil (str current-user ent/nbsp "Log out"))]
 
          [:<>
           [:a.item
@@ -125,7 +127,7 @@
            "Signup"]
 
           [:div {:className "item" :key "login" :onClick #(toggle-modal! this)}
-           (fu/hover-hand #js{:key "login-label"} "Login")
+           (hover-hand #js{:key "login-label"} "Login")
            (when open?
              (ui-floating-menu
                {:className "four wide ui raised teal segment"

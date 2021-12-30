@@ -6,6 +6,7 @@
     [com.fulcrologic.fulcro.mutations :as m :refer [defmutation]]
     [com.fulcrologic.fulcro.ui-state-machines :as sm]
     [dv.cljs-emotion-reagent :refer [defstyled]]
+    [dv.fulcro-components :refer [notification]]
     [dv.fulcro-util :as fu]
     [dv.fulcro-entity-state-machine :as fmachine]
     [{{namespace}}.task.data-model :as dm]
@@ -78,7 +79,7 @@
    :componentDidMount (fn [this] (fmachine/begin! this ::form-machine TaskItemReturn))}
   (let [{:keys [checked? disabled?]} (fu/validator-state this validator)]
     [:div
-      (fu/notification {:ui/submit-state machine-state :ui/server-message message})
+      (notification {:ui/submit-state machine-state :ui/server-message message})
      (when goog.DEBUG
          (fu/ui-button #(m/toggle! this :ui/show-form-debug?) "Debug form"))
      (fu/form-debug validator this show-form-debug?)
