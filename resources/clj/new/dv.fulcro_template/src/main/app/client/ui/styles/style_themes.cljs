@@ -1,5 +1,7 @@
 (ns {{namespace}}.client.ui.styles.style-themes
-  (:require ["polished" :refer [darken lighten]]))
+  (:require
+    ["polished/lib/color/darken" :as darken]
+    ["polished/lib/color/lighten" :as lighten]))
 
 (def light-theme
   {::name        :light-theme
