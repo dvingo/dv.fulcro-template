@@ -182,6 +182,7 @@
                                                     :secure    true})}
      ::http/enable-csrf    (if disable-csrf? nil {})
      ::http/type           :jetty
+     ::http/host           (if dev? "localhost" "0.0.0.0")
      ::http/secure-headers {:content-security-policy-settings (make-csp-policy config)}
      ::http/port           8084}))
 
