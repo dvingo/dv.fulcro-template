@@ -6,6 +6,7 @@
     [clj.new.dv.fulcro-template.options.kondo :as kondo]
     [clj.new.dv.fulcro-template.options.devcards :as devcards]
     [clj.new.dv.fulcro-template.options.workspaces :as workspaces]
+    [clj.new.dv.fulcro-template.options.storybook :as storybook]
     [clj.new.dv.fulcro-template.options.test :as test]
     [clj.new.dv.fulcro-template.options.node-server :as node-server]
     [clj.new.dv.fulcro-template.options.server :as server]
@@ -25,6 +26,7 @@
     (when (helpers/option? server/option options) (server/files data))
     (when (helpers/option? test/option options) (test/files data))
     (when (helpers/option? devcards/option options) (devcards/files data))
+    (when (helpers/option? storybook/option options) (storybook/files data))
     (when (helpers/option? workspaces/option options) (workspaces/files data))))
 
 (defn template-data [name options]
@@ -46,6 +48,7 @@
   #{ ;kondo/option
     helpers/all-option
     devcards/option
+    storybook/option
     node-server/option
     server/option
     test/option

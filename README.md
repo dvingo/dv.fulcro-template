@@ -28,6 +28,10 @@ but differs in backend tech and will continue to diverge as features are added t
   - uses in memory node during testing
   - uses rocksdb node + postrgres tx+docs store in production.
   - stores ring sessions in XTDB.
+- Component driven development tooling, choice of:
+  - workspaces (add link)
+  - devcards
+  - storybook
 
 # Use it
 
@@ -35,7 +39,7 @@ but differs in backend tech and will continue to diverge as features are added t
 
 ```bash 
 # Only needs to be done once, to install the tool:
-clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.362"}' :as clj-new
+clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.381"}' :as clj-new
 
 # Name your app:
 org_name="com.my-org"
@@ -108,6 +112,7 @@ clj -X:new :template '"/home/my-user/dv.fulcro-template::dv.fulcro-template"' :n
 
 ```
 +devcards
++storybook
 +workspaces
 +test
 +node-server

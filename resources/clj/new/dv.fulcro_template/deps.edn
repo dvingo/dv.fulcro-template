@@ -59,7 +59,7 @@
 
                                                  :extra-deps  {org.clojure/clojurescript {:mvn/version "1.11.4"}
                                                                org.clojure/test.check    {:mvn/version "1.1.1"}
-                                                               thheller/shadow-cljs      {:mvn/version "2.16.10"}
+                                                               thheller/shadow-cljs      {:mvn/version "2.17.5"}
                                                                {{#server?}}
                                                                 ;; Logging for pedestal and XTDB
                                                                 org.clojure/tools.logging {:mvn/version "1.2.3"}

@@ -57,6 +57,11 @@
                 :output-to        "target/ci.js"
                 :ns-regexp        "-test$"}
   {{/test?}}
+    {{#storybook?}}
+     :storybook {:target     :npm-module
+                 :ns-regexp  "stories$"
+                 :output-dir "resources/public/stories/js/"}
+    {{/storybook?}}
     {{#devcards?}}
      :devcards {:target     :browser
                 :output-dir "resources/public/devcards/js"

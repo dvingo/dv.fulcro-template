@@ -1,6 +1,5 @@
 {
-  "presets": [
-    ["@babel/preset-env", {"modules": "commonjs"}],
-    "@babel/react"
+  "ignore": [
+    "resources/public/stories/js/**/*.js"
   ]
 }
