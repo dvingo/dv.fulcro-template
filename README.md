@@ -59,7 +59,7 @@ clj-new can be invoked as a clojure tool or via a deps.edn alias,
 
 You can install clj-new as a tool with:
 ```bash
-clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.362"}' :as clj-new
+clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.381"}' :as clj-new
 ```
 Or add a `new` alias to your user deps.edn file. For instructions see:
 
