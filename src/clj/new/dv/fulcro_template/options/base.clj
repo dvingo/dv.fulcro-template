@@ -8,18 +8,15 @@
      ["deps.edn" (helpers/render "deps.edn" data)]
      ["guardrails.edn" (helpers/render "guardrails.edn" data)]
      ["package.json" (helpers/render "package.json" data)]
-     ["Makefile" (helpers/render "Makefile" data)]
+     ["bb.edn" (helpers/render "bb.edn" data)]
      ["README.md" (helpers/render "README.md" data)]
      ["shadow-cljs.edn" (helpers/render "shadow-cljs.edn" data)]
      [".nvmrc" (helpers/render ".nvmrc" data)]
 
-     ;; Scripts
-     ["scripts/start_dev.sh" (helpers/render "scripts/start_dev.sh" data)]
-
      ;; Client
      ["src/main/{{nested-dirs}}/client/application.cljs" (helpers/render "src/main/app/client/application.cljs" data)]
      ["src/main/{{nested-dirs}}/client/client_entry.cljs" (helpers/render "src/main/app/client/client_entry.cljs" data)]
-     ["src/main/{{nested-dirs}}/client/malli_registry.cljs" (helpers/render "src/main/app/client/malli_registry.cljs" data)]
+     ["src/main/{{nested-dirs}}/malli_registry.cljc" (helpers/render "src/main/app/malli_registry.cljc" data)]
      ["src/main/{{nested-dirs}}/client/prn_debug.cljs" (helpers/render "src/main/app/client/prn_debug.cljs" data)]
      ["src/main/{{nested-dirs}}/client/prn_debug_noop.cljs" (helpers/render "src/main/app/client/prn_debug_noop.cljs" data)]
      ["src/main/{{nested-dirs}}/client/development_preload.cljs" (helpers/render "src/main/app/client/development_preload.cljs" data)]

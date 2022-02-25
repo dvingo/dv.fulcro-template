@@ -4,15 +4,15 @@
          org.clojure/spec.alpha              {:mvn/version "0.3.218"}
          com.taoensso/timbre                 {:mvn/version "5.1.2"}
          com.taoensso/tufte                  {:mvn/version "2.2.0"}
-         com.fulcrologic/fulcro              {:mvn/version "3.5.9"
+         com.fulcrologic/fulcro              {:mvn/version "3.5.13"
                                               :exclusions  [com.cognitect/transit-cljs
                                                             com.cognitect/transit-js]}
          com.cognitect/transit-cljs          {:mvn/version "0.8.269"}
          com.fulcrologic/semantic-ui-wrapper {:mvn/version "2.0.1"}
-         com.fulcrologic/guardrails          {:mvn/version "1.1.10"}
-         metosin/malli                       {:mvn/version "0.7.5"}
+         com.fulcrologic/guardrails          {:mvn/version "1.1.11"}
+         metosin/malli                       {:mvn/version "0.8.3"}
 
-         cljs-bean/cljs-bean                 {:mvn/version "1.7.0"}
+         cljs-bean/cljs-bean                 {:mvn/version "1.8.0"}
          dv/clj-utils                        {:mvn/version "2021-10-31.0.0"}
          reagent/reagent                     {:mvn/version "1.1.0"}
          org.clojure/core.async              {:mvn/version "1.5.648"}
@@ -20,7 +20,7 @@
           ;; http requests for node.js
                          funcool/httpurr {:mvn/version "2.0.0"}
                          {{/node-server?}}
-          metosin/reitit {:mvn/version "0.5.15"}
+          metosin/reitit {:mvn/version "0.5.16"}
           {{#server?}}
            metosin/reitit-pedestal {:mvn/version "0.5.15"}
            com.wsscode/pathom {:mvn/version "2.4.0"}
@@ -53,6 +53,9 @@
                                                             :main-opts   ["-m" "kaocha.runner"]
                                                             :extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.972"}}}
                                                 {{/test?}}
+                                    :outdated
+                                    {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
+                                     :main-opts ["-m" "antq.core"]}
                                     :guardrails {:jvm-opts ["-Dguardrails.enabled"]}
                                     :dev        {:extra-paths ["src/dev" {{#test?}} "src/test" {{/test?}} {{#workspaces?}} "src/workspaces" {{/workspaces?}} {{#devcards?}} "src/devcards" {{/devcards?}}]
                                                  :jvm-opts    ["-XX:-OmitStackTraceInFastThrow"]
@@ -73,8 +76,8 @@
                                                                 {{#devcards?}}
                                                                                  devcards/devcards {:mvn/version "0.2.7"}
                                                                                  {{/devcards?}}
-                                                                 dv/cljs-emotion {:mvn/version "2021-12-05.0.0"}
+                                                                 dv/cljs-emotion {:mvn/version "2022-01-23.0.0"}
                                                                  {{#workspaces?}}    com.github.awkay/workspaces {:mvn/version "1.0.3"} {{/workspaces?}}
                                                                   ;; Formats spec explain.
-                                                                  expound/expound    {:mvn/version "0.8.10"}
+                                                                  expound/expound    {:mvn/version "0.9.0"}
                                                                   binaryage/devtools {:mvn/version "1.0.4"}}}}}

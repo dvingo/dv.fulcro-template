@@ -1,7 +1,7 @@
 (ns {{namespace}}.client.development-preload
   (:require
     [com.fulcrologic.fulcro.algorithms.timbre-support :as ts]
-    [{{namespace}}.client.malli-registry :as reg]
+    [{{namespace}}.malli-registry :as reg]
     [malli.registry :as mr]
     [taoensso.timbre :as log]))
 
