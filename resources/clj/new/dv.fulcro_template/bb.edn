@@ -11,7 +11,7 @@
           be-repl {:doc "clj -A:dev:test:guardrails"
                    :task  (shell "clj -A:dev:test:guardrails")}
 
-          jar-run
+          run-jar
          {:depends [fe-release be-release]
           :task
           (shell {:dir "deploy" :extra-env {"PORT" "9898"}}
@@ -44,7 +44,7 @@
           :task (shell "yarn outdated")}
 
          release
-         {:depends [fe-release{{#server?}}be-release{{/server?}}]
+         {:depends [fe-release{{#server?}} be-release{{/server?}}]
           :doc     "Creates the cljs release{{#server?}} and then the be release{{/server?}}"
           :task    (println "--------------------------------------------------------------------------------\nCreated full release.")}
 
@@ -78,20 +78,25 @@
           :task
           ;; todo change this to clear only the server jar and xtdb dir in deploy dir
           ;; when they exist
-          (let [jars (fs/glob "deploy" "*.jar")]
-            (when (seq jars)
-              (println "Removing jars: " (str/join ", " (map (fn [x] (str "'" x "'")) jars)))
-              (run! fs/delete jars))
+          (let [dirs
+                (filter fs/exists?
+                (concat [".shadow-cljs" "resouces/public/js/main"]{{#node-server?}} ["builds"]{{/node-server?}}{{#server?}} (when (fs/exists? "deploy") (fs/glob "deploy" "*.jar")){{/server?}}))]
+            (when (seq dirs)
+              (println "Removing dirs:" (str/join ", " (map (fn [x] (str "'" x "'")) dirs)))
+              (run! (fn [x] (if (fs/directory? x) (fs/delete-tree x) (fs/delete x))) dirs))
             (fs/delete-if-exists "builds"))}
           {{#node-server?}}
-           ;; todo add - :depends node-server-build - fill in build via shadow-cljs
+           build-node-server
+           {:depends [yarn-install]
+            :doc "Compiles the node.js server to JavaScript"
+            :task (shell "yarn shadow-cljs release node-server")}
 
            start-node-server
            {:doc "Starts node JS Server process."
-           :task (shell "node builds/node-server/node-server.js")}
-           {{/node-server?}}
-          {{#storybook?}}
-
+            :depends [build-node-server]
+            :task (shell "node builds/node-server/node-server.js")}
+         {{/node-server?}}
+         {{#storybook?}}
          storybook
          {:depends [yarn-install]
           :doc     "Starts the storybook build process"

@@ -1,7 +1,6 @@
 # Prerequisites
 
-This template utilizes GNU Make 4.x. You'll need to install it first 
-before executing `make`.
+This template utilizes babashka to execute tasks.
 
 This template uses `yarn` to handle npm dependencies.
 
@@ -14,7 +13,7 @@ In one terminal:
 ```bash
 # If you use nvm, if not see .nvmrc for the expected node.js version
 nvm use
-make
+bb fe
 ```
 this runs `yarn install` and starts the shadow-cljs watch processes.
 
@@ -63,7 +62,7 @@ _note_ you do not need to specify any JVM parameters.
 You can start this on the command line via:
 
 ```clojure
-make be-repl
+bb be-repl
 ```
 
 ## Clojure webserver.
@@ -79,18 +78,18 @@ All builds are handled by tasks in the Makefile.
 
 Both frontend and backend builds:
 ```bash
-make prod-build
+bb release
 ```
 
 Server jar only:
 
 ```bash
-make be-release
+bb be-release
 ```
 
 Run the prod server:
 ```bash
-make start-prod-server
+bb run-jar
 ```
 {{/server?}}
 
@@ -115,7 +114,7 @@ http://127.0.0.1:4001
 
 Start the server with:
 ```bash
-./scripts/start_node_server.sh
+bb start-node-server
 ```
 
 When the server is started you can connect a cljs repl using:
