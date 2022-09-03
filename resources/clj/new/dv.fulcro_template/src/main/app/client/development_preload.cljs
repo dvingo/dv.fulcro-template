@@ -3,6 +3,7 @@
     [com.fulcrologic.fulcro.algorithms.timbre-support :as ts]
     [{{namespace}}.malli-registry :as reg]
     [malli.registry :as mr]
+    [malli.dev.cljs]
     [taoensso.timbre :as log]))
 
 (js/console.log "Turning logging to :debug (in app.development-preload)")

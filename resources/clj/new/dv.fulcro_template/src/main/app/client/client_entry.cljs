@@ -11,7 +11,9 @@
     [{{namespace}}.auth.session :as session]
     {{/server?}}
     [dv.fulcro-reitit :as fr]
+    [reitit.coercion.malli]
     [shadow.resource :as rc]
+    [space.matterandvoid.subscriptions.fulcro :as sub]
     [taoensso.timbre :as log]))
 
 ;; set logging lvl using goog-define, see shadow-cljs.edn
@@ -26,14 +28,18 @@
     {:level (keyword LOG_LEVEL)}))
 
 (defn ^:export refresh []
-  (log/info "Hot code Remount")
+  (log/info "Hot code remount")
   (log/merge-config! log-config)
+  (when goog/DEBUG (malli.dev.cljs/start!))
+  (sub/clear-subscription-cache! SPA)
   (c/refresh-dynamic-queries! SPA)
   (app/mount! SPA root/Root "app"))
 
 (defn ^:export init []
   (log/merge-config! log-config)
   (log/info "Application starting.")
+  (when goog/DEBUG (malli.dev.cljs/start!))
+  (fr/register-fulcro-router! SPA root/TopRouter {:data {:coercion reitit.coercion.malli/coercion}})
   (app/set-root! SPA root/Root {:initialize-state? true})
   (fr/start-router! SPA)
   {{#server?}}
@@ -43,4 +49,5 @@
      :actor/current-session Session})
   {{/server?}}
    (log/info "MOUNTING APP")
+
   (js/setTimeout #(app/mount! SPA root/Root "app" {:initialize-state? true})))

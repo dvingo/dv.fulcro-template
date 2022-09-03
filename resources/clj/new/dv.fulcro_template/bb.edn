@@ -1,103 +1,124 @@
-{:paths ["scripts"]
- :min-bb-version "0.4.0"
- :tasks {:requires ([babashka.process :as p :refer [process]]
-                    [babashka.fs :as fs]
-                    [clojure.string :as str])
-         yarn-install
-         (do (println "Executing: yarn install")
-             (shell "yarn"))
-         {{#server?}}
+{:paths
+ ["scripts"]
 
-          be-repl {:doc "clj -A:dev:test:guardrails"
-                   :task  (shell "clj -A:dev:test:guardrails")}
+ :min-bb-version
+ "0.4.0"
 
-          jar-run
-         {:depends [fe-release be-release]
-          :task
-          (shell {:dir "deploy" :extra-env {"PORT" "9898"}}
-            (let [jar-file "server.jar"
-                  entry-ns "{{namespace}}.server.server-entry"]
-              (str "java -cp " jar-file " clojure.main -m " entry-ns)))
-          :doc "Executes the production server.jar"}
+ :tasks
+ {:init     (do
+              ;; add any dev aliases (as keywords) you want included when starting the fe and be repls.
+              (def shared-dev-aliases [])
+              (def fe-dev-aliases (into shared-dev-aliases []))
+              (def fe-release-aliases [])
+              (def be-dev-aliases (into shared-dev-aliases [])))
 
-         be-release
-         {:doc "Creates a Java Jar for the Clojure backend"
-          :depends [fe-release]
-          :task
-          (let [server-jar-file (str "server" ".jar")]
-            (println "Creating be jar.")
-            (shell (str "clojure -A:depstar -m hf.depstar.uberjar deploy/" server-jar-file)))}
+  :requires ([babashka.process :as p :refer [process]]
+             [babashka.fs :as fs]
+             [clojure.edn :as edn]
+             [clojure.string :as str])
 
-         be-outdated
-         {:doc "Runs clojure -M:outdated (antq)"
-          :task (shell "clojure -M:outdated")}
-         {{/server?}}
+  yarn-install
+  (do (println "Executing: yarn install")
+      (shell "yarn"))
 
-         fe-release
-         {:depends [yarn-install]
-          :doc     "Creates release builds for the ClojureScript code via shadow-cljs"
-          :task    (shell "yarn shadow-cljs release main")}
+  fe-release
+  {:depends [yarn-install]
+   :doc     "Creates release builds for the ClojureScript code via shadow-cljs"
+   :task    (let [aliases (into *command-line-args* fe-release-aliases)]
+              (shell (cond-> "yarn shadow-cljs release main"
+                       (seq aliases) (str " -A" (str/join aliases)))))}
 
-         fe-outdated
-         {:depends [yarn-install]
-          :doc "Runs yarn outdated"
-          :task (shell "yarn outdated")}
+  fe-outdated
+  {:depends [yarn-install]
+   :doc     "Runs yarn outdated"
+   :task    (shell "yarn outdated")}
 
-         release
-         {:depends [fe-release{{#server?}}be-release{{/server?}}]
-          :doc     "Creates the cljs release{{#server?}} and then the be release{{/server?}}"
-          :task    (println "--------------------------------------------------------------------------------\nCreated full release.")}
+  fe-test
+  {:depends [yarn-install]
+   :doc     "Runs the frontend tests via karma."
+   :task
+   (do
+     (shell "yarn shadow-cljs compile ci-tests")
+     (shell "yarn karma start --single-run"))}
 
-         fe-test
-         {:depends [yarn-install]
-          :doc     "Runs the frontend tests via karma."
-          :task
-          (do
-            (shell "yarn shadow-cljs compile ci-tests")
-            (shell "yarn karma start --single-run"))}
+  fe-report
+  {:depends [yarn-install]
+   :doc     "Creates a shadow-cljs html report at fe-bundle-report.html"
+   :task
+   (shell "yarn shadow-cljs run shadow.cljs.build-report main fe-bundle-report.html")}
 
-         fe-report
-         {:depends [yarn-install]
-          :doc     "Creates a shadow-cljs html report at fe-bundle-report.html"
-          :task
-          (shell "yarn shadow-cljs run shadow.cljs.build-report main fe-bundle-report.html")}
+  fe
+  {:depends [yarn-install]
+   :doc     "Starts a shadow-cljs watch on the main build"
+   :task    (let [aliases (into *command-line-args* fe-dev-aliases)
+                  builds ["main" {{#workspaces}} " workspaces" {{/workspaces}} {{#devcards}} "devcards" {{/devcards}} {{#storybook}} "storybook" {{/storybook}}]]
+              (shell
+                (cond-> (str "yarn run shadow-cljs watch " (str/join " " builds))
+                  (seq aliases)
+                  (str " -A" (str/join aliases))))
+              (println "STARTING FE"))}
 
-         fe
-         {:depends [yarn-install]
-          :doc     "Starts a shadow-cljs watch on main"
-          :task    (let [aliases []
-                         builds ["main" {{#workspaces}}"workspaces"{{/workspaces}}{{#devcards}}"devcards"{{/devcards}}{{#storybook}}"storybook"{{/storybook}}]]
-                     (shell
-                       (cond-> (str "yarn run shadow-cljs watch " (str/join " " builds))
-                         (seq aliases)
-                         (str " -A" (str/join aliases))))
-                     (println "STARTING FE"))}
+  clean
+  {:doc "Removes deploy and builds dirs and recreates them"
+   :task
+   ;; todo change this to clear only the server jar and xtdb dir in deploy dir
+   ;; when they exist
+   (let [dirs
+         (filter fs/exists?
+           (concat [".shadow-cljs" "resouces/public/js/main"] {{#node-server?}} ["builds"] {{/node-server?}} {{#server?}} (when (fs/exists? "deploy") (fs/glob "deploy" "*.jar")) {{/server?}}))]
+     (when (seq dirs)
+       (println "Removing dirs:" (str/join ", " (map (fn [x] (str "'" x "'")) dirs)))
+       (run! (fn [x] (if (fs/directory? x) (fs/delete-tree x) (fs/delete x))) dirs)))}
+  {{#server?}}
 
-         clean
-         {:doc "Removes deploy and builds dirs and recreates them"
-          :task
-          ;; todo change this to clear only the server jar and xtdb dir in deploy dir
-          ;; when they exist
-          (let [jars (fs/glob "deploy" "*.jar")]
-            (when (seq jars)
-              (println "Removing jars: " (str/join ", " (map (fn [x] (str "'" x "'")) jars)))
-              (run! fs/delete jars))
-            (fs/delete-if-exists "builds"))}
-          {{#node-server?}}
-           ;; todo add - :depends node-server-build - fill in build via shadow-cljs
+   be-repl {:doc "clj -A:dev:test:guardrails"
+            :task
+            (let [aliases (str/join (into *command-line-args* (into shared-dev-aliases be-dev-aliases)))]
+              (shell (str "clj -A:dev:test:guardrails" aliases)))}
 
-           start-node-server
-           {:doc "Starts node JS Server process."
-           :task (shell "node builds/node-server/node-server.js")}
-           {{/node-server?}}
-          {{#storybook?}}
+   run-jar
+   {:depends [fe-release be-release]
+    :task
+    (shell {:dir "deploy" :extra-env {"PORT" "9898"}}
+      (let [jar-file "server.jar"
+            entry-ns "{{namespace}}.server.server-entry"]
+        (str "java -cp " jar-file " clojure.main -m " entry-ns)))
+    :doc     "Executes the production server.jar"}
 
-         storybook
-         {:depends [yarn-install]
-          :doc     "Starts the storybook build process"
-          :task    (shell "yarn run start-storybook -p 6006 --ci --debug-webpack  --webpack-stats-json storybook-debug-output")}
+   be-release
+   {:doc     "Creates a Java Jar for the Clojure backend"
+    :depends [fe-release]
+    :task
+    (let [server-jar-file (str "server" ".jar")]
+      (println "Creating be jar.")
+      (shell (str "clojure -A:depstar -m hf.depstar.uberjar deploy/" server-jar-file)))}
 
-         build-storybook
-         {:depends [yarn-install]
-          :doc     "Creates static assets for serving the storybook"
-          :task    (shell "time yarn run build-storybook")}{{/storybook?}}}}
+   be-outdated
+   {:doc  "Runs clojure -M:outdated (antq)"
+    :task (shell "clojure -M:outdated")}
+
+   release
+   {:depends [fe-release be-release]
+    :doc     "Creates the cljs release and then the be release"
+    :task    (println "--------------------------------------------------------------------------------\nCreated full release.")}
+   {{/server?}} {{#node-server?}}
+
+                 build-node-server
+                 {:depends [yarn-install]
+                  :doc     "Compiles the node.js server to JavaScript"
+                  :task    (shell "yarn shadow-cljs release node-server")}
+
+                 start-node-server
+                 {:doc     "Starts node JS Server process."
+                  :depends [build-node-server]
+                  :task    (shell "node builds/node-server/node-server.js")}
+                 {{/node-server?}} {{#storybook?}}
+                                    storybook
+                                    {:depends [yarn-install]
+                                     :doc     "Starts the storybook build process"
+                                     :task    (shell "yarn run start-storybook -p 6006 --ci --debug-webpack  --webpack-stats-json storybook-debug-output")}
+
+                                    build-storybook
+                                    {:depends [yarn-install]
+                                     :doc     "Creates static assets for serving the storybook"
+                                     :task    (shell "time yarn run build-storybook")} {{/storybook?}}}}

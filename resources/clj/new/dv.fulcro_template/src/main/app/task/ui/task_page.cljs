@@ -1,6 +1,7 @@
 (ns {{namespace}}.task.ui.task-page
   (:require
-    [com.fulcrologic.fulcro.components :as c :refer [defsc]]
+    [com.fulcrologic.fulcro.components :as c]
+    [{{namespace}}.client.ui :refer [defsc]]
     [dv.fulcro-reitit :as fr]
     {{#server?}}[com.fulcrologic.fulcro.data-fetch :as df]{{/server?}}
     [{{namespace}}.task.ui.task-item :refer [ui-task-list TaskList TaskForm ui-task-form TaskItem]]))
