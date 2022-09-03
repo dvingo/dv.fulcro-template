@@ -8,7 +8,7 @@
     [com.fulcrologic.fulcro.dom.html-entities :as ent]
     [com.fulcrologic.fulcro.mutations :as m]
     [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-    [com.fulcrologic.fulcro.ui-state-machines :as sm :refer [defstatemachine]]
+    [com.fulcrologic.fulcro.ui-state-machines :as sm]
     [goog.object :as g]
     [goog.events :as events :refer [EventType]]
     [dv.fulcro-reitit :as fr]

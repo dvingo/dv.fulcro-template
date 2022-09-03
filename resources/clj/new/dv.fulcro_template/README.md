@@ -1,7 +1,6 @@
 # Prerequisites
 
-This template utilizes GNU Make 4.x. You'll need to install it first 
-before executing `make`.
+This template utilizes babashka to execute tasks.
 
 This template uses `yarn` to handle npm dependencies.
 
@@ -12,9 +11,12 @@ This template uses `yarn` to handle npm dependencies.
 In one terminal:
 
 ```bash
-# If you use nvm, if not see .nvmrc for the expected node.js version
+# If you use nvm, if not see .nvmrc for the expected node.js version you should have installed.
 nvm use
-make
+
+bb fe
+# optionally pass any deps.edn aliases:
+bb fe :dev/my-alias
 ```
 this runs `yarn install` and starts the shadow-cljs watch processes.
 
@@ -23,10 +25,14 @@ Please see the `shadow-cljs.edn` file for ports used for development builds.
 If any of those ports are used already shadow-cljs will try different ports so please see the console output 
 by shadow-cljs.
 
+A shadow-cljs http server is started on port 8021 that serves the frontend app from resources/public/index.html
 {{#server?}}
+This is useful if you want to hack on the client code without needing the backend server running. Of course there will 
+be no API data though.
+
 When the main build is complete, start the backend server either in an editor or at the command line.
 
-The clj server reads the manifest file produced by shadow-cljs so the build must complete before you start the server.
+The clj server reads the manifest file produced by shadow-cljs so the frontend build must complete before you start the server.
 {{/server?}}
 
 ## Editor setup
@@ -62,8 +68,12 @@ _note_ you do not need to specify any JVM parameters.
 
 You can start this on the command line via:
 
-```clojure
-make be-repl
+```bash
+bb be-repl
+
+# pass any aliases from deps.edn
+
+bb be-repl :dev/my-alias
 ```
 
 ## Clojure webserver.
@@ -79,18 +89,18 @@ All builds are handled by tasks in the Makefile.
 
 Both frontend and backend builds:
 ```bash
-make prod-build
+bb release
 ```
 
 Server jar only:
 
 ```bash
-make be-release
+bb be-release
 ```
 
 Run the prod server:
 ```bash
-make start-prod-server
+bb run-jar
 ```
 {{/server?}}
 
@@ -115,7 +125,7 @@ http://127.0.0.1:4001
 
 Start the server with:
 ```bash
-./scripts/start_node_server.sh
+bb start-node-server
 ```
 
 When the server is started you can connect a cljs repl using:

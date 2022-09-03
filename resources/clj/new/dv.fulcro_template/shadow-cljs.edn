@@ -28,12 +28,9 @@
 
                                                  {{namespace}}.client.development-preload
                                                  com.fulcrologic.fulcro.inspect.dom-picker-preload]
-                                    {{^server?}}
-                                    :http-port 8021
-                                    :http-resource-root "public"
-                                    :http-root          "resources/public/"
-                                    {{/server?}}}}
-  {{#node-server?}}
+                                    :http-port        8021
+                                    :http-root        "resources/public"
+                                    :push-state/index "index.html"}}{{#node-server?}}
   :node-server {:target    :node-script
                 :main      {{namespace}}.node-server/main
                 :output-to "builds/node-server/node-server.js"

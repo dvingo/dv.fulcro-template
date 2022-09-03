@@ -37,22 +37,80 @@ but differs in backend tech and will continue to diverge as features are added t
 
 ## TLDR
 
-```bash 
+Install `clj-new` as a tool if you don't have it installed (this only needs to be done once).
+
+```bash
 # Only needs to be done once, to install the tool:
 clojure -Ttools install com.github.seancorfield/clj-new '{:git/tag "v1.2.381"}' :as clj-new
+```
 
-# Name your app:
-org_name="com.my-org"
-app_name="my-app"
-clj -Tclj-new create :template dv.fulcro-template :args '["+all"]' :name "$org_name/$app_name"
-cd "$app_name"
+Add these aliases to your ~/.clojure/deps.edn
+
+```clojure
+  :fulcro-app {:extra-deps {com.github.seancorfield/clj-new {:mvn/version "1.2.381"}}
+               :exec-fn clj-new/create
+               :exec-args {:template "dv.fulcro-template" :args ["+test" "+node-server"]}}
+
+  :full-fulcro-app {:extra-deps {com.github.seancorfield/clj-new {:mvn/version "1.2.381"}}
+               :exec-fn clj-new/create
+               :exec-args {:template "dv.fulcro-template" :args ["+all"]}}
+```
+
+Now you can run:
+
+```bash
+# for a js only app:
+clj -X:fulcro-app :name pro.my-org/app-name
+
+# with pedestal + pathom + xtdb server:
+clj -X:full-fulcro-app :name pro.my-org/app-name
+```
+
+For even more convenience you can make shell function helpers (this is bash):
+
+```bash
+new_fulcro_app () {
+  if [ -z $1 ]; then echo "You must supply a project name, optionally clj-new args."; return; fi
+  clojure -X:fulcro-app :name "${@}"
+}
+
+new_full_fulcro_app () {
+  if [ -z $1 ]; then echo "You must supply a project name, optionally clj-new args."; return; fi
+  clojure -X:full-fulcro-app :name "${@}"
+}
+```
+And invoke them like so:
+```bash
+new_fulcro_app co.my-org/my-app
+# override the args:
+new_fulcro_app co.my-org/my-app :args '["+test"]'
+
+# overwrite existing directory:
+new_fulcro_app co.my-org/my-app :force true
+# et cetera
+```
+
+### Start development proceses:
+
+```bash
+cd app-name
 # Requires node > 16
 nvm use
-# Start compiling clojurescript
-make
-# Connect your editor of choice and start the server if you have one. This can be started with:
-make be-repl
+
+# Start compiling ClojureScript
+
+bb fe
+# or pass any deps aliases:
+bb fe :dev/my-alias
+
+# Connect your editor of choice and start the server if you have one via src/dev/user.clj.
+# You can also start an nREPL server via:
+
+bb be-repl
+# or pass any deps aliases:
+bb be-repl :dev/my-alias
 ```
+
 ## Have time, will read
 
 clj-new can be invoked as a clojure tool or via a deps.edn alias,
@@ -86,20 +144,21 @@ which will list out of date dependencies for you to update.
 Commands to make a new project directory from this template.
 
 If you installed clj-new as a tool replace `clj -X:new` with `clj -Tclj-new create` in the commands below.
+If you didn't install the alias above in your ~/.clojure/deps.edn , then use: `clj -X:new :template dv.fulcro-template`
 
 Using Clojure CLI version 1.10.1.727 or later
 ```bash
 # Frontend only app
-clj -X:new :template dv.fulcro-template :name my-username/my-project-name
+clj -X:fulcro-app :name my-username/my-project-name
 
 # Pass one or more options
-clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args '["+devcards" "+workspaces" "+test" "+node-server" "+server"]'
+clj -X:fulcro-app :name my-username/my-project-name :args '["+devcards" "+workspaces" "+test" "+node-server" "+server"]'
 
 # Or include them all:
-clj -X:new :template dv.fulcro-template :name my-username/my-project-name :args '["+all"]'
+clj -X:fulcro-app :name my-username/my-project-name :args '["+all"]'
 
 # output to another directory name, and overwrite if it already exists:
-clj -X:new :template dv.fulcro-template :name my-username/my-project-name :output '"my-preferred-project-name"' :force true
+clj -X:fulcro-app :name my-username/my-project-name :output '"my-preferred-project-name"' :force true
 ```
 
 If you're working on the template itself, you can generate a project from the filesystem:
@@ -107,6 +166,8 @@ If you're working on the template itself, you can generate a project from the fi
 ```bash
 clj -X:new :template '"/home/my-user/dv.fulcro-template::dv.fulcro-template"' :name my-group/my-project
 ```
+
+You can also add this to your ~/.clojure/deps.edn file in an alias for convenience.
 
 ## Options
 
