@@ -1,26 +1,28 @@
 {:paths ["src/main" "resources"]
 
- :deps  {org.clojure/clojure                 {:mvn/version "1.10.3"}
+ :deps  {org.clojure/clojure                 {:mvn/version "1.11.1"}
          org.clojure/spec.alpha              {:mvn/version "0.3.218"}
-         com.taoensso/timbre                 {:mvn/version "5.1.2"}
+         com.taoensso/timbre                 {:mvn/version "5.2.1"}
          com.taoensso/tufte                  {:mvn/version "2.2.0"}
-         com.fulcrologic/fulcro              {:mvn/version "3.5.13"
+         com.fulcrologic/fulcro              {:mvn/version "3.5.17"
                                               :exclusions  [com.cognitect/transit-cljs
                                                             com.cognitect/transit-js]}
          com.cognitect/transit-cljs          {:mvn/version "0.8.269"}
          com.fulcrologic/semantic-ui-wrapper {:mvn/version "2.0.1"}
          com.fulcrologic/guardrails          {:mvn/version "1.1.11"}
-         metosin/malli                       {:mvn/version "0.8.3"}
+         metosin/malli                       {:mvn/version "0.8.4"}
+         com.yetanalytics/colossal-squuid    {:mvn/version "0.1.4"}
+         space.matterandvoid/subscriptions   {:mvn/version "100.1.1"}
 
          cljs-bean/cljs-bean                 {:mvn/version "1.8.0"}
          dv/clj-utils                        {:mvn/version "2021-10-31.0.0"}
-         reagent/reagent                     {:mvn/version "1.1.0"}
+         reagent/reagent                     {:mvn/version "1.1.1"}
          org.clojure/core.async              {:mvn/version "1.5.648"}
          {{#node-server?}}
           ;; http requests for node.js
                          funcool/httpurr {:mvn/version "2.0.0"}
                          {{/node-server?}}
-          metosin/reitit {:mvn/version "0.5.16"}
+          metosin/reitit {:mvn/version "0.5.18"}
           {{#server?}}
            metosin/reitit-pedestal {:mvn/version "0.5.15"}
            com.wsscode/pathom {:mvn/version "2.4.0"}
@@ -45,13 +47,13 @@
            io.pedestal/pedestal.service {:mvn/version "0.5.9"}
            io.pedestal/pedestal.jetty {:mvn/version "0.5.9"}
            ;; Password hashing
-           cryptohash-clj/cryptohash-clj {:mvn/version "0.1.10"} {{/server?}}}
+           cryptohash-clj/cryptohash-clj {:mvn/version "0.1.10"}{{/server?}}}
 
                          :aliases {:depstar {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}}
                                    {{#test?}}
                                                 :clj-tests {:extra-paths ["src/test"]
                                                             :main-opts   ["-m" "kaocha.runner"]
-                                                            :extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.972"}}}
+                                                            :extra-deps  {lambdaisland/kaocha {:mvn/version "1.65.1029"}}}
                                                 {{/test?}}
                                     :outdated
                                     {:extra-deps {com.github.liquidz/antq {:mvn/version "RELEASE"}}
@@ -62,7 +64,7 @@
 
                                                  :extra-deps  {org.clojure/clojurescript {:mvn/version "1.11.4"}
                                                                org.clojure/test.check    {:mvn/version "1.1.1"}
-                                                               thheller/shadow-cljs      {:mvn/version "2.17.5"}
+                                                               thheller/shadow-cljs      {:mvn/version "2.18.0"}
                                                                {{#server?}}
                                                                 ;; Logging for pedestal and XTDB
                                                                 org.clojure/tools.logging {:mvn/version "1.2.3"}
@@ -80,4 +82,4 @@
                                                                  {{#workspaces?}}    com.github.awkay/workspaces {:mvn/version "1.0.3"} {{/workspaces?}}
                                                                   ;; Formats spec explain.
                                                                   expound/expound    {:mvn/version "0.9.0"}
-                                                                  binaryage/devtools {:mvn/version "1.0.4"}}}}}
+                                                                  binaryage/devtools {:mvn/version "1.0.5"}}}}}

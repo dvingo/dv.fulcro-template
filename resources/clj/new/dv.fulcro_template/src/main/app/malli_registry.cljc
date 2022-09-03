@@ -1,6 +1,7 @@
 (ns {{namespace}}.malli-registry
   (:require
     [malli.core :as m]
+    #?(:clj [dv.xtdb-util :as xu])
     [malli.registry :as mr]))
 
 (defonce registry*
@@ -9,6 +10,8 @@
       (m/base-schemas)
       (m/type-schemas)
       (select-keys (m/sequence-schemas) [:cat])
+      {:xt/id (:uuid (m/type-schemas))}
+      #?(:clj {:xtdb-node (m/-simple-schema {:type :xtdb-node :pred xu/xtdb-node?})})
       ; add more schemas here
       )))
 
